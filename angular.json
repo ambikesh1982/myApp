@@ -122,8 +122,13 @@
               "devServerTarget": "foodz9-dev:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "foodz9-dev"
 }

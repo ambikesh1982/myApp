@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "foodz9-dev": {
+      "hosting": {
+        "foodz9-dev": [
+          "foodz9-dev"
+        ]
+      }
+    }
+  }
+}

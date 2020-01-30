@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "foodz9-dev",
+      "public": "dist/foodz9-dev",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}
