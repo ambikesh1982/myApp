@@ -14,7 +14,7 @@ export interface AppToolbar {
 @Injectable({
   providedIn: 'root'
 })
-export class LayoutService {
+export class   LayoutService {
 
   defaultToolbar: AppToolbar = {
     showSideNavToggleIcon: true,

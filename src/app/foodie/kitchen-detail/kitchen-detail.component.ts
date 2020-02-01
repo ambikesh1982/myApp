@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from 'src/app/core/layout.service';
 
 @Component({
   selector: 'app-kitchen-detail',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KitchenDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor(private layout: LayoutService) {
+    this.layout.appToolBar$.next({ pageTitle: 'Kitchen details', showGoBackIcon: true  });
+   }
 
   ngOnInit() {
   }
