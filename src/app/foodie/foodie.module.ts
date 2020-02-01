@@ -4,7 +4,6 @@ import { KitchenListComponent } from './kitchen-list/kitchen-list.component';
 import { KitchenDetailComponent } from './kitchen-detail/kitchen-detail.component';
 import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { SharedModule } from '../shared/shared.module';
 
 const foodieRoutes: Routes = [
@@ -22,7 +21,6 @@ const foodieRoutes: Routes = [
   imports: [
     CommonModule,
     MaterialModule,
-    FlexLayoutModule,
     SharedModule,
     RouterModule.forChild(foodieRoutes),
   ]

@@ -1,4 +1,4 @@
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container" fullscreen>
   <mat-sidenav #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
@@ -11,7 +11,7 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <mat-toolbar color="primary">
+    <!-- <mat-toolbar color="primary">
       <button
         type="button"
         aria-label="Toggle sidenav"
@@ -20,8 +20,9 @@
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
-      <span>foodz9-dev</span>
-    </mat-toolbar>
+      <span>Foodz9</span>
+    </mat-toolbar> -->
+    <app-toolbar class="mat-elevation-z16" [sidenavRef]=drawer></app-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>
   </mat-sidenav-content>
