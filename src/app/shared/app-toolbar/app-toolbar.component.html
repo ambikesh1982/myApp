@@ -1,6 +1,6 @@
-<mat-toolbar color=primary class="mat-elevation-z16">
-    <button mat-icon-button (click)="sidenavRef.toggle()">
+<mat-toolbar *ngIf="layout.appToolBar$|async as toolbar" color=primary class="mat-elevation-z16">
+    <button  *ngIf="toolbar.showSideNavToggleIcon" mat-icon-button (click)="sidenavRef.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
-    Foodz9
+    <span *ngIf="toolbar.pageTitle">{{toolbar.pageTitle}}</span>
 </mat-toolbar>

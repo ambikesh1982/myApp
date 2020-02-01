@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { LayoutService } from 'src/app/core/layout.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -8,7 +9,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class AppToolbarComponent implements OnInit {
   @Input() sidenavRef: any;
 
-  constructor() { }
+  constructor(public layout: LayoutService) { }
 
   ngOnInit() {
   }

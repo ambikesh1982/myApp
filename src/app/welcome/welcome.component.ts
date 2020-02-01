@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { LayoutService } from '../core/layout.service';
 
 @Component({
   selector: 'app-welcome',
@@ -8,9 +9,10 @@ import { Router } from '@angular/router';
 })
 export class WelcomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private layout: LayoutService) { }
 
   ngOnInit() {
+    this.layout.appToolBar$.next({ pageTitle: 'Foodz9*', showSideNavToggleIcon: true });
   }
 
   redirectToKitchenListPage() {
