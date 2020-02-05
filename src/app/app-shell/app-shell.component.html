@@ -10,7 +10,8 @@
       <a mat-list-item href="#">Link 3</a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content style="margin-top: 62px">
+  <mat-sidenav-content>
+    <mat-toolbar></mat-toolbar> <!--Dummy Toolbar to solve safari issue </-->
     <!-- <mat-toolbar color="primary">
       <button
         type="button"
@@ -22,7 +23,7 @@
       </button>
       <span>Foodz9</span>
     </mat-toolbar> -->
-    <app-toolbar class="skicky-toolbar" [sidenavRef]=drawer></app-toolbar>
+    <app-toolbar style="position: fixed; top:0; z-index: 99; width: 100%" [sidenavRef]=drawer></app-toolbar>
     <!-- Add Content Here -->
     <ng-content></ng-content>
   </mat-sidenav-content>

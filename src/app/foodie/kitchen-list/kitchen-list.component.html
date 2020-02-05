@@ -3,7 +3,8 @@
         (click)="navigateToKitchenDetails(i.id)">
         <mat-card-header>
             <!-- <div mat-card-avatar class="app-header-image"></div> -->
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url('+i.image.url+')', 'background-size':'cover'}"></div>
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url('+i.image.url+')', 'background-size':'cover'}">
+            </div>
             <mat-card-title>{{i.title}}</mat-card-title>
             <mat-card-subtitle>
                 <!-- <mat-icon style="vertical-align:text-bottom;">room</mat-icon> -->
