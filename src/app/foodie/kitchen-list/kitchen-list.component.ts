@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/core/layout.service';
+import { FoodieService, Kitchen } from '../foodie.service';
+import { Observable, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-kitchen-list',
@@ -9,7 +12,19 @@ import { LayoutService } from 'src/app/core/layout.service';
 })
 export class KitchenListComponent implements OnInit {
 
-  constructor(private router: Router, private layout: LayoutService) { }
+  errorMessage;
+  kitchens$: Observable<Kitchen[]> = this.foodieService.kitchens$
+    .pipe(
+      catchError(error => {
+        this.errorMessage = error;
+        return of(null);
+      })
+    );
+
+  constructor(
+    private foodieService: FoodieService,
+    private router: Router,
+    private layout: LayoutService) { }
 
   ngOnInit() {
     this.layout.appToolBar$.next({ showSideNavToggleIcon: true });

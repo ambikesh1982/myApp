@@ -1,8 +1,20 @@
-<div>
-    <mat-card 
-        class="app-card" 
-        *ngFor="let i of [1,2,3,4,5,6,7,8,9,10,11,12]"
-        (click)="navigateToKitchenDetails(i)">
-        {{i}}
+<div *ngIf="kitchens$|async as kitchens">
+    <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 *ngFor="let i of kitchens" class="app-card"
+        (click)="navigateToKitchenDetails(i.id)">
+        <mat-card-header>
+            <!-- <div mat-card-avatar class="app-header-image"></div> -->
+            <div mat-card-avatar [ngStyle]="{'background-image': 'url('+i.image.url+')', 'background-size':'cover'}"></div>
+            <mat-card-title>{{i.title}}</mat-card-title>
+            <mat-card-subtitle>
+                <!-- <mat-icon style="vertical-align:text-bottom;">room</mat-icon> -->
+                <span>{{i.address}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <img mat-card-image [src]="i.image.url" alt="Photo of a Shiba Inu">
+        <mat-card-content>
+            <p>
+                {{i.description}}
+            </p>
+        </mat-card-content>
     </mat-card>
 </div>
