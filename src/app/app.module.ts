@@ -15,7 +15,7 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { AppShellComponent } from './app-shell/app-shell.component';
 
 
-// import { FlexLayoutModule } from '@angular/flex-layout';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -36,7 +36,7 @@ import { SharedModule } from './shared/shared.module';
     AngularFireStorageModule, // imports firebase/storage only needed for storage features
     MaterialModule,
     BrowserAnimationsModule,
-    // FlexLayoutModule,
+    FlexLayoutModule,
     LayoutModule,
     SharedModule,
     AppRoutingModule,

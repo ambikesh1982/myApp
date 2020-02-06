@@ -1,4 +1,5 @@
-<div *ngIf="kitchens$|async as kitchens">
+<div fxLayout="row wrap" fxLayoutAlign="space-around center"
+    *ngIf="kitchens$|async as kitchens">
     <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 *ngFor="let i of kitchens" class="app-card"
         (click)="navigateToKitchenDetails(i.id)">
         <mat-card-header>

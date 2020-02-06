@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
 import { KitchenResolver } from './kitchen.resolver';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const foodieRoutes: Routes = [
   { path: 'kitchens', component: KitchenListComponent },
@@ -23,6 +24,7 @@ const foodieRoutes: Routes = [
     CommonModule,
     MaterialModule,
     SharedModule,
+    FlexLayoutModule,
     RouterModule.forChild(foodieRoutes),
   ],
   providers: [KitchenResolver]
