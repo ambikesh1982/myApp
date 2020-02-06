@@ -5,13 +5,14 @@ import { KitchenDetailComponent } from './kitchen-detail/kitchen-detail.componen
 import { Routes, RouterModule } from '@angular/router';
 import { MaterialModule } from '../material/material.module';
 import { SharedModule } from '../shared/shared.module';
+import { KitchenResolver } from './kitchen.resolver';
 
 const foodieRoutes: Routes = [
   { path: 'kitchens', component: KitchenListComponent },
   {
     path: 'kitchens/:id',
     component: KitchenDetailComponent,
-    // resolve: { kitchen: KitchenResolver }
+    resolve: { kitchen: KitchenResolver }
   },
   { path: '', redirectTo: 'kitchens', pathMatch: 'full' }
 ];
@@ -23,6 +24,7 @@ const foodieRoutes: Routes = [
     MaterialModule,
     SharedModule,
     RouterModule.forChild(foodieRoutes),
-  ]
+  ],
+  providers: [KitchenResolver]
 })
 export class FoodieModule { }

@@ -1,8 +1,67 @@
-<div>
+<div fxLayout="column" fxLayoutAlign="stretch">
+
+    <!-- <div class="banner"></div> -->
+    <mat-card style="background-color:whitesmoke;">
+        <mat-card-header style="margin-top:10px">
+            <div mat-card-avatar
+                [ngStyle]="{'background-image': 'url('+kitchen.image.url+')', 'background-size':'cover'}"></div>
+            <mat-card-title>{{kitchen.title}}</mat-card-title>
+            <mat-card-subtitle>
+                <span>{{kitchen.address}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <div fxLayout="row wrap" fxLayoutAlign="space-around start">
+                <div fxFlex=80>
+                    <mat-icon>restaurant_menu</mat-icon>
+                    <!-- <span class="align-with-icon">{{kitchen.address.pin}}</span> -->
+                    <span class="align-with-icon">Veg/Non-Veg</span>
+                </div>
+                <div fxFlex>
+                    <mat-icon [color]="kitchen.likeCount?'accent':null">favorite_border</mat-icon>
+                    <span class="align-with-icon">{{kitchen.likeCount?kitchen.likeCount:null}}</span>
+                </div>
+            </div>
+            <br>
+            <span>{{kitchen.description}}</span>
+            <!-- <mat-divider></mat-divider> -->
+            <div fxLayout="row wrap" fxLayoutAlign="space-around start">
+                <div fxFlex=50>
+                    <p>Delivery Options</p>
+                    <li>Take Away</li>
+                    <li>Dine In</li>
+                    <li>Home delivery</li>
+                </div>
+                <div fxFlex=50>
+                    <p>Payment Options</p>
+                    <li>COD</li>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+        <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 class="app-card" style="margin-top:4px"
+            *ngFor="let menuItem of menu$|async">
+            <img mat-card-image [src]="menuItem.image.path" [alt]="menuItem.title">
+            <mat-card-header>
+                <mat-card-title [style.color]="menuItem.isNonVeg? 'red':'green'">{{menuItem.title}}</mat-card-title>
+                <mat-card-subtitle>
+                    CAD {{menuItem.price}} / Good for 2 persons
+                </mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <li>Pre-Order: 2 days in advance</li>
+                <li>Avaibility: Weekends only</li>
+            </mat-card-content>
+
+        </mat-card>
+    </div>
+
     <button 
         mat-fab 
         style="position: fixed; bottom:20px; z-index: 99; right:20px" 
         class="mat-elevation-z4">
         <mat-icon>call</mat-icon>
     </button>
-</div>
+

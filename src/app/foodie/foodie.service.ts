@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, shareReplay } from 'rxjs/operators';
 
 export interface Kitchen {
   id: string;
@@ -26,12 +26,20 @@ export class FoodieService {
   kitchens$: Observable<Kitchen[]> = this.afs.collection<Kitchen[]>(this.kitchensCollection)
               .valueChanges({ idField: 'id' })
               .pipe(
+                shareReplay(),
                 tap(console.log),
                 catchError(this.handleError));
 
   constructor(private afs: AngularFirestore) { }
 
-
+  getKitchenByID(id: string): Observable<Kitchen> {
+    console.log('getKitchenByID: ', id);
+    const kitchen = `${this.kitchensCollection}/${id}`;
+    return this.afs.doc<any>(kitchen).valueChanges().pipe(
+      tap(console.log),
+      catchError(this.handleError)
+    );
+  }
 
   private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure
