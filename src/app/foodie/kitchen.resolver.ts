@@ -16,7 +16,7 @@ export class KitchenResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> {
     const id = route.paramMap.get('id');
     return this.ks.getKitchenByID(id).pipe(
-      delay(2000), // added a delay to test loading spinner. To be removed later.
+      // delay(2000), // added a delay to test loading spinner. To be removed later.
       take(1),
       tap(resp => console.log('MyKitchenResolver: resp >>', resp)),
       catchError(e => {

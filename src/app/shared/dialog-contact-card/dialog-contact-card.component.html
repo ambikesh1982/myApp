@@ -1,0 +1,17 @@
+<div>
+    <mat-dialog-content>
+        <mat-icon *ngIf="dialogData.email" style="vertical-align:text-bottom;">email</mat-icon>
+        <span>: {{dialogData.email}}</span>
+        <br>
+        <mat-icon *ngIf="dialogData.phone" style="vertical-align:text-bottom;">phone</mat-icon>
+        <span style="font-size: small;">: {{dialogData.phone}}</span>
+    </mat-dialog-content>
+    <mat-dialog-actions style="float:right">
+        <!-- <button mat-icon-button [mat-dialog-close]="false">
+            <mat-icon color="warn">clear</mat-icon>
+        </button> -->
+        <button mat-icon-button [mat-dialog-close]="true">
+            <mat-icon color="primary">done</mat-icon>
+        </button>
+    </mat-dialog-actions>
+</div>

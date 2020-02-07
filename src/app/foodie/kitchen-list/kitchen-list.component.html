@@ -4,7 +4,7 @@
         (click)="navigateToKitchenDetails(i.id)">
         <mat-card-header>
             <!-- <div mat-card-avatar class="app-header-image"></div> -->
-            <div mat-card-avatar [ngStyle]="{'background-image': 'url('+i.image.url+')', 'background-size':'cover'}">
+            <div mat-card-avatar *ngIf="i.image" [ngStyle]="{'background-image': 'url('+i.image.url+')', 'background-size':'cover'}">
             </div>
             <mat-card-title>{{i.title}}</mat-card-title>
             <mat-card-subtitle>
@@ -12,7 +12,7 @@
                 <span>{{i.address}}</span>
             </mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image [src]="i.image.url" alt="Photo of a Shiba Inu">
+        <img mat-card-image *ngIf="i.image" [src]="i.image.url" alt="Photo of a Shiba Inu">
         <mat-card-content>
             <p>
                 {{i.description}}
