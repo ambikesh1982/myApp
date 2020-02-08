@@ -16,7 +16,7 @@ export class KitchenDetailComponent implements OnInit {
   kitchen: Kitchen;
   errorMessage;
 
-  menu$: Observable<IMenuItem[]>;
+  menu$: Observable<any>;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,7 +28,13 @@ export class KitchenDetailComponent implements OnInit {
 
   ngOnInit() {
     this.kitchen = this.route.snapshot.data.kitchen;
-    this.menu$ = this.foodieService.getMenuItems(this.kitchen.id);
+    this.menu$ = this.foodieService.getMenuItems(this.kitchen.id).pipe(
+      catchError(e => {
+        const message = `Retrieval error: ${e}`;
+        console.error('MyKitchenResolver: error >>', e);
+        return of({ menu: null, error: message });
+      })
+    );
   }
 
   openDialog() {
