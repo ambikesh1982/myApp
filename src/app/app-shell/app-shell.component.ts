@@ -11,14 +11,14 @@ import { map, shareReplay } from 'rxjs/operators';
 export class AppShellComponent {
 
   navList = [
-    { menuIcon: 'home', menuName: 'Home', menuRoute: '/' },
-    { menuIcon: 'assignment', menuName: 'My Orders', menuRoute: '/checkout' },
-    { menuIcon: 'shopping_cart', menuName: 'Cart', menuRoute: '/cart' },
+    { menuIcon: 'home', menuName: 'My Kitchen', menuRoute: '/' },
+    // { menuIcon: 'assignment', menuName: 'My Orders', menuRoute: '/checkout' },
+    // { menuIcon: 'shopping_cart', menuName: 'Cart', menuRoute: '/cart' },
     { menuIcon: 'favorite', menuName: 'Wish List', menuRoute: '/wishlist' },
-    { menuIcon: 'account_circle', menuName: 'Profile', menuRoute: '/user' },
-    { menuIcon: 'language', menuName: 'Language', menuRoute: './' },
-    { menuIcon: 'android', menuName: 'Download App', menuRoute: './' },
-    { menuIcon: 'help', menuName: 'Help', menuRoute: './' },
+    // { menuIcon: 'account_circle', menuName: 'Profile', menuRoute: '/user' },
+    // { menuIcon: 'language', menuName: 'Language', menuRoute: './' },
+    // { menuIcon: 'android', menuName: 'Download App', menuRoute: './' },
+    // { menuIcon: 'help', menuName: 'Help', menuRoute: './' },
     { menuIcon: 'feedback', menuName: 'Feedback', menuRoute: './' },
 
   ];

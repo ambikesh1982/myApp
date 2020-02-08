@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/core/layout.service';
 import { FoodieService } from '../foodie.service';
@@ -9,11 +9,13 @@ import { Kitchen } from '../kitchen';
 @Component({
   selector: 'app-kitchen-list',
   templateUrl: './kitchen-list.component.html',
-  styleUrls: ['./kitchen-list.component.scss']
+  styleUrls: ['./kitchen-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KitchenListComponent implements OnInit {
 
   errorMessage;
+
   kitchens$: Observable<Kitchen[]> = this.foodieService.kitchens$
     .pipe(
       catchError(error => {

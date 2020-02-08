@@ -9,8 +9,8 @@
     <mat-nav-list>
       <a mat-list-item *ngFor="let nav of navList" [routerLink]="nav.menuRoute" routerLinkActive="active"
         (click)="drawer.close()">
-        <mat-icon>{{nav.menuIcon}}</mat-icon>
-        {{nav.menuName}}
+        <mat-icon matListIcon>{{nav.menuIcon}}</mat-icon>
+        <span matLine>{{nav.menuName}}</span>
       </a>
     </mat-nav-list>
   </mat-sidenav>
