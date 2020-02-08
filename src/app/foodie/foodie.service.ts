@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { catchError, tap, shareReplay } from 'rxjs/operators';
-import { Kitchen } from './kitchen';
+import { Kitchen, IMenuItem } from './kitchen';
 
 
 @Injectable({
@@ -20,6 +20,7 @@ export class FoodieService {
                 tap(console.log),
                 catchError(this.handleError));
 
+
   constructor(private afs: AngularFirestore) { }
 
   getKitchenByID(id: string): Observable<Kitchen> {
@@ -29,6 +30,17 @@ export class FoodieService {
       tap(console.log),
       catchError(this.handleError)
     );
+  }
+
+  getMenuItems(kitchenId: string): Observable<IMenuItem[]> {
+    return this.afs.collection(this.kitchensCollection)
+    .doc(kitchenId)
+    .collection<IMenuItem[]>(this.menuSubCollection)
+    .valueChanges({ idField: 'menuId' })
+    .pipe(
+      shareReplay(),
+      tap(console.log),
+      catchError(this.handleError));
   }
 
   private handleError(err) {
