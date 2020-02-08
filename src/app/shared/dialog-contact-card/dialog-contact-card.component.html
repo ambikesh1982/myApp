@@ -8,7 +8,7 @@
         <br>
         <div *ngIf="dialogData.phone">
             <mat-icon style="vertical-align:text-bottom;">phone</mat-icon>
-            <span>: {{dialogData.phone}}</span>
+            <a href="tel:+`${dialogData.phone}`">{{dialogData.phone}}</a>
         </div>
     </mat-dialog-content>
     <mat-dialog-actions style="float:right">
