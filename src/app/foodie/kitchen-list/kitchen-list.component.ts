@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/core/layout.service';
-import { FoodieService, Kitchen } from '../foodie.service';
+import { FoodieService } from '../foodie.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Kitchen } from '../kitchen';
 
 @Component({
   selector: 'app-kitchen-list',

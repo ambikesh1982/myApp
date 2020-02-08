@@ -1,6 +1,7 @@
 <mat-sidenav-container class="sidenav-container" fullscreen>
   <mat-sidenav 
     #drawer 
+    class="sidenav"
     [style.width]="(isHandset$ | async) ? '80%':'400px'" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     mode=over>

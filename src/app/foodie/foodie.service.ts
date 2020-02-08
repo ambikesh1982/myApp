@@ -2,20 +2,8 @@ import { Injectable } from '@angular/core';
 import { throwError, Observable } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { catchError, tap, shareReplay } from 'rxjs/operators';
+import { Kitchen } from './kitchen';
 
-export interface Kitchen {
-  id: string;
-  ownerId: string;
-  title: string;
-  email: string;
-  mobileNo: string;
-  address: { line1: string, pin: string };
-  image: { path: string, url: string };
-  description: string;
-  pureVeg: boolean;
-  menuItemCount: number;
-  likeCount: number;
-}
 
 @Injectable({
   providedIn: 'root'

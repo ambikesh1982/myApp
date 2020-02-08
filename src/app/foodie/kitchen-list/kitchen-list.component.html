@@ -15,7 +15,7 @@
         <img mat-card-image *ngIf="i.image" [src]="i.image.url" alt="Photo of a Shiba Inu">
         <mat-card-content>
             <p>
-                {{i.description}}
+                {{i.description|truncate:[100, '...']}}
             </p>
         </mat-card-content>
     </mat-card>

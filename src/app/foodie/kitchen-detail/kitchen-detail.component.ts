@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { LayoutService } from 'src/app/core/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { DialogService, IContactInfo } from 'src/app/core/dialog.service';
-import { Kitchen } from '../foodie.service';
 import { Observable } from 'rxjs';
+import { Kitchen } from '../kitchen';
 
 @Component({
   selector: 'app-kitchen-detail',

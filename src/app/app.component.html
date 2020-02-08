@@ -1,4 +1,5 @@
 <div>
+  <mat-progress-spinner class="fixed-center" *ngIf="isLoading" mode="indeterminate"></mat-progress-spinner>
   <app-shell>
     <router-outlet></router-outlet>
   </app-shell>
