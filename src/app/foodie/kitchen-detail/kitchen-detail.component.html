@@ -11,13 +11,18 @@
             </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <div fxLayout="row wrap" fxLayoutAlign="space-around start">
-                <div fxFlex=80>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                <div>
                     <mat-icon>restaurant_menu</mat-icon>
-                    <!-- <span class="align-with-icon">{{kitchen.address.pin}}</span> -->
                     <span class="align-with-icon">Veg/Non-Veg</span>
                 </div>
-                <div fxFlex>
+
+                <div *ngIf="kitchen.website" (click)="goToLink(kitchen.website)">
+                    <mat-icon [color]="kitchen.likeCount?'accent':null">public</mat-icon>
+                    <span class="align-with-icon">Website</span>
+                </div>
+
+                <div>
                     <mat-icon [color]="kitchen.likeCount?'accent':null">favorite_border</mat-icon>
                     <span class="align-with-icon">{{kitchen.likeCount?kitchen.likeCount:null}}</span>
                 </div>

@@ -1,15 +1,17 @@
 <div>
     <mat-dialog-content style="font-size: small;">
-        <div *ngIf="dialogData.email">
-            <mat-icon style="vertical-align:text-bottom;">email</mat-icon>
-            <span>: {{dialogData.email}}</span>
-        </div>
-        
-        <br>
-        <div *ngIf="dialogData.phone">
-            <mat-icon style="vertical-align:text-bottom;">phone</mat-icon>
-            <a href="tel:+`${dialogData.phone}`">{{dialogData.phone}}</a>
-        </div>
+        <mat-list>
+            <h3 mat-subheader>Please contact to place the order.</h3>
+            <mat-list-item>
+                <mat-icon matListIcon >email</mat-icon>
+                <a matLine href="mailto:+`${dialogData.email}`">{{dialogData.email}}</a>
+            </mat-list-item>
+
+            <mat-list-item>
+                <mat-icon matListIcon>phone</mat-icon>
+                <a matLine href="tel:+`${dialogData.phone}`">{{dialogData.phone}}</a>
+            </mat-list-item>
+        </mat-list>
     </mat-dialog-content>
     <mat-dialog-actions style="float:right">
         <!-- <button mat-icon-button [mat-dialog-close]="false">

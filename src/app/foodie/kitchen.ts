@@ -10,6 +10,7 @@ export interface Kitchen {
   pureVeg: boolean;
   menuItemCount: number;
   likeCount: number;
+  website?: string;
 }
 
 export interface IMenuItem {

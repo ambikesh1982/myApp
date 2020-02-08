@@ -42,6 +42,8 @@ export class KitchenDetailComponent implements OnInit {
     this.ds.openContactDialog(contactInfo);
   }
 
-  goBack() {}
+  goToLink(url: string) {
+    window.open(url, '_blank');
+  }
 
 }
