@@ -16,7 +16,7 @@ export class FoodieService {
   kitchens$: Observable<Kitchen[]> = this.afs.collection<Kitchen[]>(this.kitchensCollection)
               .valueChanges({ idField: 'id' })
               .pipe(
-                shareReplay(),
+                shareReplay(1),
                 tap(console.log),
                 catchError(this.handleError));
 
@@ -38,7 +38,7 @@ export class FoodieService {
     .collection<IMenuItem[]>(this.menuSubCollection)
     .valueChanges({ idField: 'menuId' })
     .pipe(
-      shareReplay(),
+      shareReplay(1),
       tap(console.log),
       catchError(this.handleError));
   }

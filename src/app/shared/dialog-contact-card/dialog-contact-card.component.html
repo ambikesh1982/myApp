@@ -4,12 +4,12 @@
             <h3 mat-subheader>Please contact to place the order.</h3>
             <mat-list-item>
                 <mat-icon matListIcon >email</mat-icon>
-                <a matLine href="mailto:+`${dialogData.email}`">{{dialogData.email}}</a>
+                <a matLine [href]="'mailto:'+dialogData.email">{{dialogData.email}}</a>
             </mat-list-item>
 
             <mat-list-item>
                 <mat-icon matListIcon>phone</mat-icon>
-                <a matLine href="tel:+`${dialogData.phone}`">{{dialogData.phone}}</a>
+                <a matLine [href]="'tel:'+dialogData.phone">{{dialogData.phone}}</a>
             </mat-list-item>
         </mat-list>
     </mat-dialog-content>
