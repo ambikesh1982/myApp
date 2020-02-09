@@ -1,0 +1,10 @@
+<div *ngIf="currentUser|async as user">
+    <ul>
+        <li>UID: {{user.uid}}</li>
+        <li>Name: {{user.displayName}}</li>
+        <li>Address: {{user.address}}</li>
+        <li>isAnonymous: {{user.isAnonymous}}</li>
+    </ul>
+    <button *ngIf="user.isAnonymous" mat-raised-button (click)="this.loginGoogle(user.address)">Login</button>
+    <h3>{{user|json}}</h3>
+</div>

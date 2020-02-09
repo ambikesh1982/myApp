@@ -13,6 +13,10 @@ const routes: Routes = [
     path: 'host',
     loadChildren: () => import('./host/host.module').then(m => m.HostModule)
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+  },
   { path: 'welcome', component: WelcomeComponent },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent, data: { title: 'PAGE_NOT_FOUND_PAGE' } }
