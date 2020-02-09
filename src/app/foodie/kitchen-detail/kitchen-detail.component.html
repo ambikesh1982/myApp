@@ -18,7 +18,7 @@
                 </div>
 
                 <div *ngIf="kitchen.website" (click)="goToLink(kitchen.website)">
-                    <mat-icon [color]="kitchen.likeCount?'accent':null">public</mat-icon>
+                    <mat-icon color="primary">public</mat-icon>
                     <span class="align-with-icon">Website</span>
                 </div>
 
@@ -40,6 +40,7 @@
                 <div fxFlex=50>
                     <p>Payment Options</p>
                     <li>COD</li>
+                    <li>Interac e-Transfer</li>
                 </div>
             </div>
         </mat-card-content>
@@ -48,7 +49,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-around center">
         <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 class="app-card" style="margin-top:4px"
             *ngFor="let menuItem of menu$|async">
-            <img mat-card-image [src]="menuItem.image.path" [alt]="menuItem.title">
+            <img *ngIf="menuItem.image" mat-card-image [src]="menuItem.image.url" [alt]="menuItem.title">
             <mat-card-header>
                 <mat-card-title [style.color]="menuItem.isNonVeg? 'red':'green'">{{menuItem.title}}</mat-card-title>
                 <mat-card-subtitle>
@@ -56,8 +57,12 @@
                 </mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <li>Pre-Order: 2 days in advance</li>
-                <li>Avaibility: Weekends only</li>
+            <div *ngIf="menuItem.description">
+                <span>{{menuItem.description}}</span>
+                <br><br>
+            </div>
+                <li>Pre-Order: 1 day in advance</li>
+                <li>Avaibility: {{menuItem.availability?menuItem.availability:'All Days'}}</li>
             </mat-card-content>
 
         </mat-card>
