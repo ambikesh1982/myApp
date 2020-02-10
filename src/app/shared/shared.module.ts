@@ -4,15 +4,17 @@ import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import { MaterialModule } from '../material/material.module';
 import { DialogContactCardComponent } from './dialog-contact-card/dialog-contact-card.component';
 import { TruncatePipe } from './truncate.pipe';
+import { GooglePlacesDirective } from './google-places.directive';
 
 const SHARED_COMPONENTS = [
   AppToolbarComponent,
   TruncatePipe,
+  GooglePlacesDirective,
 ];
 
 
 @NgModule({
-  declarations: [AppToolbarComponent, DialogContactCardComponent, TruncatePipe],
+  declarations: [AppToolbarComponent, DialogContactCardComponent, GooglePlacesDirective, TruncatePipe],
   imports: [
     CommonModule,
     MaterialModule,

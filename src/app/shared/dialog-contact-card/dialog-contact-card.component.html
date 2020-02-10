@@ -2,12 +2,12 @@
     <mat-dialog-content style="font-size: small;">
         <mat-list>
             <h3 mat-subheader>Please contact to place the order.</h3>
-            <mat-list-item>
+            <mat-list-item *ngIf="dialogData.email">
                 <mat-icon matListIcon >email</mat-icon>
                 <a matLine [href]="'mailto:'+dialogData.email">{{dialogData.email}}</a>
             </mat-list-item>
 
-            <mat-list-item>
+            <mat-list-item *ngIf="dialogData.phone">
                 <mat-icon matListIcon>phone</mat-icon>
                 <a matLine [href]="'tel:'+dialogData.phone">{{dialogData.phone}}</a>
             </mat-list-item>
