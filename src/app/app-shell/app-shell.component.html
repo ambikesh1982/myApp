@@ -5,7 +5,35 @@
     [style.width]="(isHandset$ | async) ? '80%':'400px'" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     mode=over>
-    <mat-toolbar>Welcome Guest!</mat-toolbar>
+    <div *ngIf="auth.currUser$ | async as user">
+    
+      <div *ngIf="user.isAnonymous else registeredUser">
+        <mat-toolbar color="primary">
+    
+          <a mat-mini-fab [routerLink]="['/user/', user.uid]" (click)="drawer.toggle()">
+            <mat-icon>perm_identity</mat-icon> {{user.displayName}}
+          </a>
+    
+          <span class="spacer"></span>
+    
+          <button mat-stroked-button (click)="drawer.toggle()" [routerLink]="['/user/', user.uid]">
+            <span>Sign in</span>
+          </button>
+    
+        </mat-toolbar>
+      </div>
+    
+      <!-- User logged in -->
+      <ng-template #registeredUser>
+        <mat-toolbar color="primary">
+          <span class="mat-body" [routerLink]="['/user/', user.uid]">{{user.displayName}}</span>
+          <span class="spacer"></span>
+          <button mat-stroked-button (click)="drawer.toggle()">
+            <span>Sign out</span>
+          </button>
+        </mat-toolbar>
+        </ng-template>
+        </div>
     <mat-nav-list>
       <a mat-list-item *ngFor="let nav of navList" [routerLink]="nav.menuRoute" routerLinkActive="active"
         (click)="drawer.close()">

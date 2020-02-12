@@ -5,12 +5,13 @@ import { FoodieService } from '../foodie.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Kitchen } from '../kitchen';
+import { AuthService } from 'src/app/core/auth.service';
 
 @Component({
   selector: 'app-kitchen-list',
   templateUrl: './kitchen-list.component.html',
   styleUrls: ['./kitchen-list.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KitchenListComponent implements OnInit {
 
@@ -27,10 +28,13 @@ export class KitchenListComponent implements OnInit {
   constructor(
     private foodieService: FoodieService,
     private router: Router,
-    private layout: LayoutService) { }
+    private layout: LayoutService,
+    private auth: AuthService) {
+    console.log('From KitchenListComponent');
+  }
 
   ngOnInit() {
-    this.layout.appToolBar$.next({ showSideNavToggleIcon: true });
+    this.layout.appToolBar$.next({ showSideNavToggleIcon: true, showUserAddress: this.auth.currUser.address });
   }
 
   navigateToKitchenDetails(id: string) {

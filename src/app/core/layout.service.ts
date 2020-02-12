@@ -9,6 +9,7 @@ export interface AppToolbar {
   showUserIcon?: boolean;
   showCancelIcon?: boolean;
   showGoBackIcon?: boolean;
+  showUserAddress?: string;
 }
 
 @Injectable({

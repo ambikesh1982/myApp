@@ -48,7 +48,7 @@ export class AuthService {
     return this.currUser$.pipe(first()).toPromise();
   }
 
-  async loginAnonymously(geo: string): Promise<void> {
+  async loginAnonymously(formattedAddress: string): Promise<void> {
     try {
       console.log('#Event: loginAnonymously()#');
       const credential = await this.af.auth.signInAnonymously();
@@ -57,11 +57,12 @@ export class AuthService {
         isAnonymous: credential.user.isAnonymous,
         displayName: 'Guest',
         photoURL: '/assets/profile_placeholder.png',
-        profileMode: 'foodie'
+        profileMode: 'foodie',
+        address: formattedAddress,
       };
       // Save user data to fireabase...
       console.log('loginAnonymously(): Sign in successfull...', anomymousUser);
-      // this.addUpdateUserDB(anomymousUser);
+      this.addUpdateUserDB(anomymousUser);
     } catch (e) {
       this.handleAuthErrors(e);
     }

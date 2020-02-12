@@ -2,7 +2,20 @@
 import { Directive, OnInit, Output, EventEmitter, NgZone, ElementRef } from '@angular/core';
 import { ScriptLoadService } from '../core/script-load.service';
 import { environment } from 'src/environments/environment';
-import * as firebase from 'firebase';
+
+// interface AutoAddress  {
+//   street_number: string;
+//   route: string;
+//   locality: string;
+//   administrative_area_level_1: string;
+//   country: string;
+//   postal_code: string;
+// }
+
+interface GoogleAddress {
+  formattedAddress: string;
+  postal_code: string;
+}
 
 
 @Directive({
@@ -36,7 +49,6 @@ export class GooglePlacesDirective implements OnInit {
     autoComplete.addListener('place_changed', () => {
       this.ngZone.run(() => {
         const place = autoComplete.getPlace();
-
         if (place.formatted_address) {
           this.addressFromGoogle.emit(place.formatted_address);
         } else {
