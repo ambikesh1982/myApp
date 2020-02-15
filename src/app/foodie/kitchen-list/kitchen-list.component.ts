@@ -1,11 +1,11 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { LayoutService } from 'src/app/core/layout.service';
-import { FoodieService } from '../foodie.service';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Kitchen } from '../kitchen';
 import { AuthService } from 'src/app/core/auth.service';
+import { KitchenService } from 'src/app/core/kitchen.service';
 
 @Component({
   selector: 'app-kitchen-list',
@@ -17,7 +17,7 @@ export class KitchenListComponent implements OnInit {
 
   errorMessage;
 
-  kitchens$: Observable<Kitchen[]> = this.foodieService.kitchens$
+  kitchens$: Observable<Kitchen[]> = this.ks.kitchens$
     .pipe(
       catchError(error => {
         this.errorMessage = error;
@@ -26,7 +26,7 @@ export class KitchenListComponent implements OnInit {
     );
 
   constructor(
-    private foodieService: FoodieService,
+    private ks: KitchenService,
     private router: Router,
     private layout: LayoutService,
     private auth: AuthService) {

@@ -1,24 +1,22 @@
 import { Injectable } from '@angular/core';
-import { throwError, Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { Kitchen, IMenuItem } from '../foodie/kitchen';
+import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { catchError, tap, shareReplay } from 'rxjs/operators';
-import { Kitchen, IMenuItem } from './kitchen';
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class FoodieService {
-
+export class KitchenService {
   kitchensCollection = 'kitchens';
   menuSubCollection = 'menuItems';
 
   kitchens$: Observable<Kitchen[]> = this.afs.collection<Kitchen[]>(this.kitchensCollection)
-              .valueChanges({ idField: 'id' })
-              .pipe(
-                shareReplay(1),
-                tap(console.log),
-                catchError(this.handleError));
+    .valueChanges({ idField: 'id' })
+    .pipe(
+      shareReplay(1),
+      tap(console.log),
+      catchError(this.handleError));
 
 
   constructor(private afs: AngularFirestore) { }
@@ -34,13 +32,13 @@ export class FoodieService {
 
   getMenuItems(kitchenId: string): Observable<IMenuItem[]> {
     return this.afs.collection(this.kitchensCollection)
-    .doc(kitchenId)
-    .collection<IMenuItem[]>(this.menuSubCollection)
-    .valueChanges({ idField: 'menuId' })
-    .pipe(
-      shareReplay(1),
-      tap(console.log),
-      catchError(this.handleError));
+      .doc(kitchenId)
+      .collection<IMenuItem[]>(this.menuSubCollection)
+      .valueChanges({ idField: 'menuId' })
+      .pipe(
+        shareReplay(1),
+        tap(console.log),
+        catchError(this.handleError));
   }
 
   private handleError(err) {

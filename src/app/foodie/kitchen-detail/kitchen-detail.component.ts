@@ -3,9 +3,9 @@ import { LayoutService } from 'src/app/core/layout.service';
 import { ActivatedRoute } from '@angular/router';
 import { DialogService, IContactInfo } from 'src/app/core/dialog.service';
 import { Observable, of } from 'rxjs';
-import { Kitchen, IMenuItem } from '../kitchen';
-import { FoodieService } from '../foodie.service';
-import { catchError, tap } from 'rxjs/operators';
+import { Kitchen } from '../kitchen';
+import { KitchenService } from 'src/app/core/kitchen.service';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-kitchen-detail',
@@ -22,13 +22,13 @@ export class KitchenDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private layout: LayoutService,
     private ds: DialogService,
-    private foodieService: FoodieService) {
+    private ks: KitchenService) {
     this.layout.appToolBar$.next({ showSideNavToggleIcon: true, showGoBackIcon: true  });
    }
 
   ngOnInit() {
     this.kitchen = this.route.snapshot.data.kitchen;
-    this.menu$ = this.foodieService.getMenuItems(this.kitchen.id).pipe(
+    this.menu$ = this.ks.getMenuItems(this.kitchen.id).pipe(
       catchError(e => {
         const message = `Retrieval error: ${e}`;
         console.error('MyKitchenResolver: error >>', e);
