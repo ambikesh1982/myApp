@@ -4,13 +4,14 @@ export interface Kitchen {
   title: string;
   email: string;
   mobileNo: string;
-  address: { line1: string, pin: string };
+  address: string;
   image: { path: string, url: string };
   description: string;
   pureVeg: boolean;
   menuItemCount: number;
   likeCount: number;
   website?: string;
+  createdAt?: firebase.firestore.FieldValue;
 }
 
 export interface IMenuItem {

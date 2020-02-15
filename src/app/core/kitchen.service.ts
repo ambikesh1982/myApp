@@ -1,28 +1,66 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, EMPTY, of } from 'rxjs';
 import { Kitchen, IMenuItem } from '../foodie/kitchen';
 import { shareReplay, tap, catchError } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class KitchenService {
   kitchensCollection = 'kitchens';
+  userCollection = 'app-users';
   menuSubCollection = 'menuItems';
+  db: firebase.firestore.WriteBatch;
+  increment;
+  decrement;
 
-  kitchens$: Observable<Kitchen[]> = this.afs.collection<Kitchen[]>(this.kitchensCollection)
-    .valueChanges({ idField: 'id' })
-    .pipe(
+  kitchens$ = this.afs.collection<Kitchen[]>(this.kitchensCollection)
+    .valueChanges({ idField: 'id' }).pipe(
       shareReplay(1),
-      tap(console.log),
-      catchError(this.handleError));
+      catchError(e => {
+        console.error('Error while fetching kitchens from firebase: ', e);
+        return EMPTY;
+      }));
 
 
-  constructor(private afs: AngularFirestore) { }
+  constructor(private afs: AngularFirestore) {
+    this.increment = firebase.firestore.FieldValue.increment(1);
+    this.decrement = firebase.firestore.FieldValue.increment(-1);
+  }
+
+  get serverTimestampFromFirestore() {
+    return firebase.firestore.FieldValue.serverTimestamp();
+  }
+
+  get newFirebaseDocumentKey() {
+    return this.afs.createId();
+  }
+
+  initializeKitchen(): Kitchen {
+    return {
+      id: null,
+      ownerId: null,
+      title: null,
+      email: null,
+      mobileNo: null,
+      address: null,
+      image: { path: '', url: '' },
+      description: null,
+      pureVeg: false,
+      menuItemCount: 0,
+      likeCount: 0,
+      website: null,
+      createdAt: null,
+    };
+  }
 
   getKitchenByID(id: string): Observable<Kitchen> {
     console.log('getKitchenByID: ', id);
+    if (id === 'new') {
+      return of(this.initializeKitchen());
+    }
     const kitchen = `${this.kitchensCollection}/${id}`;
     return this.afs.doc<any>(kitchen).valueChanges().pipe(
       tap(console.log),
@@ -40,6 +78,19 @@ export class KitchenService {
         tap(console.log),
         catchError(this.handleError));
   }
+
+  // Create Kitchen: Called from AddKitchenComponent
+  async addUpdateKitchen(kitchen: Kitchen): Promise<void> {
+    const batch = this.afs.firestore.batch();
+    const userDocRef = this.afs.collection('users').doc(kitchen.ownerId).ref;
+    const kitchenDocRef = this.afs.collection(this.kitchensCollection).doc(kitchen.id).ref;
+
+    batch.set(kitchenDocRef, kitchen, { merge: true });
+    batch.set(userDocRef, { kitchenId: kitchen.id }, { merge: true });
+    return batch.commit();
+  }
+
+
 
   private handleError(err) {
     // in a real world app, we may send the server to some remote logging infrastructure
