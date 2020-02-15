@@ -1,15 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
-import { AuthService } from '../core/auth.service';
+import { Observable, Subscription } from 'rxjs';
+import { map, shareReplay, tap, first } from 'rxjs/operators';
+import { AuthService, AppUser } from '../core/auth.service';
+import { SnackbarNotificationService } from '../core/snackbar-notification.service';
 
 @Component({
   selector: 'app-shell',
   templateUrl: './app-shell.component.html',
   styleUrls: ['./app-shell.component.scss']
 })
-export class AppShellComponent {
+export class AppShellComponent implements OnDestroy {
+
+  cu: AppUser;
+  sub: Subscription;
 
   navList = [
     { menuIcon: 'home', menuName: 'My Kitchen', menuRoute: '/' },
@@ -30,6 +34,21 @@ export class AppShellComponent {
       shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver, public auth: AuthService) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public auth: AuthService,
+    private notify: SnackbarNotificationService) {
+    this.sub = this.auth.currUser$.pipe(
+      first(),
+      tap( user => {
+        this.cu = user;
+        this.notify.openSnackBar('Welcome ' + this.cu.displayName + ' !!');
+      })
+    ).subscribe();
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
 
 }

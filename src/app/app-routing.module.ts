@@ -4,6 +4,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { AuthGuard } from './core/auth.guard';
 import { AuthSocialGuard } from './core/auth-social.guard';
+import { UnAuthGuard } from './core/un-auth.guard';
+
+
 
 
 const routes: Routes = [
@@ -15,13 +18,13 @@ const routes: Routes = [
   {
     path: 'host',
     loadChildren: () => import('./host/host.module').then(m => m.HostModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthSocialGuard]
   },
   {
     path: 'user',
     loadChildren: () => import('./user/user.module').then(m => m.UserModule)
   },
-  { path: 'welcome', component: WelcomeComponent },
+  { path: 'welcome', component: WelcomeComponent, canActivate: [UnAuthGuard] },
   { path: '', redirectTo: 'welcome', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent, data: { title: 'PAGE_NOT_FOUND_PAGE' } }
 ];

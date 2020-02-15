@@ -23,16 +23,15 @@ export class WelcomeComponent implements OnInit {
     console.log('collected Address: ', formattedAddress);
   }
 
-  async loadFoodieModule() {
-    try {
+  loadFoodieModule() {
       console.log('redirectToKitchenListPage(): foodie/kitchens');
-      await this.auth.loginAnonymously(this.userAddress);
-      this.router.navigate(['foodie', 'kitchens']);
-    } catch (e) {
-      console.log('Error in loadFodieModule: ', e);
+      this.auth.loginAnonymously(this.userAddress)
+      .then( resp => {
+        this.router.navigate(['foodie', 'kitchens']);
+        // this.router.navigate(['host', 'kitchen', '*new']);
+        console.log('resp: ', resp);
+      }).catch(e => console.log('Error in loadFodieModule: ', e));
+      //
   }
-
-  }
-
 
 }

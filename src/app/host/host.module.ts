@@ -10,7 +10,6 @@ const hostRoutes: Routes = [
   {
     path: 'kitchen/:id',
     component: AddKitchenComponent,
-    canActivate: [AuthSocialGuard]
   }
 ];
 
