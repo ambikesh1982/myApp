@@ -1,12 +1,14 @@
 <div>
     <mat-card>
-        <h2 style="margin-top:2em">Hungry?</h2>
+        <h2 style="margin-top:1em">Hungry?</h2>
         <h3>Order food from home kitchens near you.</h3>
+ 
         <mat-form-field style="width: 100%" appearance="outline">
-            <mat-label>Enter your address...</mat-label>
-            <input type="text" appGooglePlaces (addressFromGoogle)="collectAddress($event)" matInput autofocus>
+            <mat-label>Currently available in...</mat-label>
+            <input type="text" value="NorthYork" matInput autofocus disabled>
         </mat-form-field>
     </mat-card>
+
     <button mat-fab style="position: fixed; bottom:20px; z-index: 99; right:20px" class="mat-elevation-z16"
         (click)="loadFoodieModule()">
         <mat-icon>done</mat-icon>

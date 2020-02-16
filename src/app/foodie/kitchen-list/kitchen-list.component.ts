@@ -34,7 +34,7 @@ export class KitchenListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layout.appToolBar$.next({ showSideNavToggleIcon: true, showUserAddress: this.auth.currUser.address });
+    this.layout.appToolBar$.next({ showSideNavToggleIcon: true});
   }
 
   navigateToKitchenDetails(id: string) {

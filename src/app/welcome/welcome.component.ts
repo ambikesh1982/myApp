@@ -15,7 +15,7 @@ export class WelcomeComponent implements OnInit {
   constructor(private router: Router, private layout: LayoutService, private auth: AuthService) { }
 
   ngOnInit() {
-    this.layout.appToolBar$.next({ pageTitle: 'Foodz9*', showSideNavToggleIcon: true });
+    this.layout.appToolBar$.next({ pageTitle: 'Foodz9*'});
   }
 
   collectAddress(formattedAddress: string) {
@@ -25,13 +25,14 @@ export class WelcomeComponent implements OnInit {
 
   loadFoodieModule() {
       console.log('redirectToKitchenListPage(): foodie/kitchens');
-      this.auth.loginAnonymously(this.userAddress)
-      .then( resp => {
-        this.router.navigate(['foodie', 'kitchens']);
-        // this.router.navigate(['host', 'kitchen', '*new']);
-        console.log('resp: ', resp);
-      }).catch(e => console.log('Error in loadFodieModule: ', e));
-      //
+      this.router.navigate(['foodie', 'kitchens']);
+      // this.auth.loginAnonymously(this.userAddress)
+      // .then( resp => {
+      //   this.router.navigate(['foodie', 'kitchens']);
+      //   // this.router.navigate(['host', 'kitchen', '*new']);
+      //   console.log('resp: ', resp);
+      // }).catch(e => console.log('Error in loadFodieModule: ', e));
+      // //
   }
 
 }

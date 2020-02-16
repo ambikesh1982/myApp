@@ -6,31 +6,34 @@ import { AuthGuard } from './core/auth.guard';
 import { AuthSocialGuard } from './core/auth-social.guard';
 import { UnAuthGuard } from './core/un-auth.guard';
 
-
-
-
 const routes: Routes = [
   {
     path: 'foodie',
     loadChildren: () => import('./foodie/foodie.module').then(m => m.FoodieModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'host',
     loadChildren: () => import('./host/host.module').then(m => m.HostModule),
-    canActivate: [AuthSocialGuard]
   },
   {
     path: 'user',
-    loadChildren: () => import('./user/user.module').then(m => m.UserModule)
+    loadChildren: () => import('./user/user.module').then(m => m.UserModule),
   },
-  { path: 'welcome', component: WelcomeComponent, canActivate: [UnAuthGuard] },
-  { path: '', redirectTo: 'welcome', pathMatch: 'full' },
-  { path: '**', component: PageNotFoundComponent, data: { title: 'PAGE_NOT_FOUND_PAGE' } }
+  { path: 'welcome',
+    component: WelcomeComponent,
+    canActivate: [UnAuthGuard]
+  },
+  { path: '',
+    redirectTo: 'welcome',
+    pathMatch: 'full'
+  },
+  { path: '**',
+    component: PageNotFoundComponent,
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {enableTracing: true})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

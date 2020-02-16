@@ -1,13 +1,15 @@
 <mat-toolbar *ngIf="layout.appToolBar$|async as toolbar" color="primary" class="mat-elevation-z4">
-    <button  *ngIf="toolbar.showSideNavToggleIcon" mat-icon-button (click)="sidenavRef.toggle()">
+    <div *ngIf="toolbar.showSideNavToggleIcon">
+    <button mat-icon-button (click)="sidenavRef.toggle()">
         <mat-icon>menu</mat-icon>
     </button>
     <span class="spacer"></span>
-    <span *ngIf ="toolbar.showUserAddress" style="font-size:medium;">{{toolbar.showUserAddress|truncate:[30]}}</span>      
-    <!-- <span *ngIf="toolbar.pageTitle">{{toolbar.pageTitle}}</span> -->
+    </div>
+    <span *ngIf="toolbar.showUserAddress" style="font-size:medium;">{{toolbar.showUserAddress|truncate:[30]}}</span>
+    <span *ngIf="toolbar.pageTitle">{{toolbar.pageTitle}}</span>
     <span class="spacer"></span>
     <button *ngIf="toolbar.showGoBackIcon" mat-icon-button (click)=goBack()>
         <mat-icon>arrow_backword</mat-icon>
     </button>
-    
+
 </mat-toolbar>

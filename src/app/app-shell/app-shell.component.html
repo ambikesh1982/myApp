@@ -2,19 +2,16 @@
   <mat-sidenav #drawer class="sidenav" [style.width]="(isHandset$ | async) ? '80%':'400px'" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" mode=over>
 
-    <div *ngIf="cu">
-      <mat-toolbar>{{cu.displayName}}</mat-toolbar>
+    <div>
+      <mat-toolbar>{{(currAppUser|async).displayName}}</mat-toolbar>
+      <mat-nav-list>
+        <a mat-list-item *ngFor="let nav of navList" routerLinkActive="active"
+          (click)="drawer.close()">
+          <mat-icon matListIcon>{{nav.menuIcon}}</mat-icon>
+          <span matLine>{{nav.menuName}}</span>
+        </a>
+      </mat-nav-list>
     </div>
-    
- 
-
-    <mat-nav-list>
-      <a mat-list-item *ngFor="let nav of navList" [routerLink]="nav.menuRoute" routerLinkActive="active"
-        (click)="drawer.close()">
-        <mat-icon matListIcon>{{nav.menuIcon}}</mat-icon>
-        <span matLine>{{nav.menuName}}</span>
-      </a>
-    </mat-nav-list>
 
   </mat-sidenav>
 

@@ -14,9 +14,13 @@ export class AppShellComponent implements OnDestroy {
 
   cu: AppUser;
   sub: Subscription;
+  currAppUser: Observable<AppUser>;
+  kitchenId: string;
+  menuName: string;
+  menuRoute: string;
 
   navList = [
-    { menuIcon: 'home', menuName: 'My Kitchen', menuRoute: '/' },
+    { menuIcon: 'home', menuName: this.menuRoute, menuRoute: this.menuRoute },
     // { menuIcon: 'assignment', menuName: 'My Orders', menuRoute: '/checkout' },
     // { menuIcon: 'shopping_cart', menuName: 'Cart', menuRoute: '/cart' },
     { menuIcon: 'favorite', menuName: 'Wish List', menuRoute: '/wishlist' },
@@ -38,17 +42,35 @@ export class AppShellComponent implements OnDestroy {
     private breakpointObserver: BreakpointObserver,
     public auth: AuthService,
     private notify: SnackbarNotificationService) {
-    this.sub = this.auth.currUser$.pipe(
-      first(),
-      tap( user => {
-        this.cu = user;
-        this.notify.openSnackBar('Welcome ' + this.cu.displayName + ' !!');
+    this.currAppUser = this.auth.currUser$.pipe(
+      tap(user => {
+        if (user && user.kitchenId) {
+            console.log('User has kitchen: ', user.kitchenId);
+            this.kitchenId = user.kitchenId;
+            this.handleKitchenRedirect(this.kitchenId);
+        } else {
+            console.log('No kitchen for user: Setup one');
+            this.kitchenId = null;
+            this.handleKitchenRedirect(null);
+        }
       })
-    ).subscribe();
+    );
+  }
+
+  handleKitchenRedirect(kitchenId: string) {
+    if (kitchenId) {
+      this.menuName = 'MyKitchen';
+      this.menuRoute = `/host/kitchen/${kitchenId}`;
+      console.log(this.menuRoute);
+    } else {
+      this.menuName = 'Setup your kitchen';
+      this.menuRoute = '/host/kitchen/*new';
+      console.log(this.menuRoute);
+    }
   }
 
   ngOnDestroy() {
-    this.sub.unsubscribe();
+    console.log('Component destroyed!!!');
   }
 
 }

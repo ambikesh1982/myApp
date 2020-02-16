@@ -1,10 +1,40 @@
-<div *ngIf="currentUser|async as user">
-    <ul>
-        <li>UID: {{user.uid}}</li>
-        <li>Name: {{user.displayName}}</li>
-        <li>Address: {{user.address}}</li>
-        <li>isAnonymous: {{user.isAnonymous}}</li>
-    </ul>
-    <button *ngIf="user.isAnonymous" mat-raised-button (click)="this.loginGoogle(user.address)">Login</button>
-    <h3>{{user|json}}</h3>
+<div *ngIf="currentUser$|async as user" fxLayout="column">
+<mat-card>
+        <mat-card-header>
+            <div mat-card-avatar *ngIf="user.photoURL" style="margin-right: 8px;"
+                [ngStyle]="{'background-image': 'url('+user.photoURL+')', 'background-size':'cover'}">
+            </div>
+            <mat-card-title>{{user.displayName}}</mat-card-title>
+            <mat-card-subtitle>
+                <!-- <mat-icon style="vertical-align:text-bottom;">room</mat-icon> -->
+                <span>{{user.address}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <p>Become a home chef in 3 easy steps :)</p>
+            
+            <mat-list fxLayout="row wrap">
+                <mat-list-item>
+                    <mat-icon matListIcon>verified_user</mat-icon>
+                    <h3 matLine> Sign in with <span style="color: blue">Google</span> account. </h3>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListIcon>kitchen</mat-icon>
+                    <h3 matLine> Create your kitchen. </h3>
+                </mat-list-item>
+                <mat-list-item>
+                    <mat-icon matListIcon>playlist_add</mat-icon>
+                    <h3 matLine> Add menu items </h3>
+                </mat-list-item>
+            </mat-list>
+            
+        </mat-card-content>
+    </mat-card>
+    <button mat-fab style="position: fixed; bottom:20px; z-index: 99; right:20px" class="mat-elevation-z4"
+        (click)="loginWithGoogle(user)">
+        <mat-icon>arrow_forward</mat-icon>
+    </button>
 </div>
+
+

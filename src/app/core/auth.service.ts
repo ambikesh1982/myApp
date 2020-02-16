@@ -5,6 +5,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase';
 import { Router } from '@angular/router';
 import { switchMap, tap, first } from 'rxjs/operators';
+import * as firebase from 'firebase';
 
 
 export interface AppUser {
@@ -23,6 +24,7 @@ export interface AppUser {
 export class AuthService {
 
   currUser: AppUser | null;
+  dummyUser: AppUser;
   userCollection = 'app-users';
   currUser$: Observable<AppUser | null>;
 
@@ -33,23 +35,27 @@ export class AuthService {
     this.currUser$ = this.af.authState.pipe(
       switchMap((user: AppUser) => {
         if (user) {
-          return this.db.collection(this.userCollection).doc<AppUser>(user.uid)
-            .valueChanges().pipe(
-              tap(cu => {
-                this.currUser = cu;
-                // this.notify.openSnackBar('Welcome' + cu.displayName + '!!');
-                console.log('User-info from firebase-auth: ', this.currUser);
-              })
-            );
+          console.log('Rwa user from fb: ', user);
+          return this.db.collection(this.userCollection).doc<AppUser>(user.uid).valueChanges();
         } else {
-          this.currUser = null;
           return of(null);
         }
       })
     );
   }
 
+  createDummyUser(): AppUser {
+    const dummyUser: AppUser = {
+      uid: '123',
+      isAnonymous: true,
+      displayName: 'Guest',
+      photoURL: '/assets/profile_placeholder.png'
+    };
+    return dummyUser;
+  }
+
   async getCurrentUser(): Promise<AppUser> {
+    // console.log('From getCurrentUser');
     return this.currUser$.pipe(first()).toPromise();
   }
 
@@ -57,13 +63,16 @@ export class AuthService {
       console.log('#Event: loginAnonymously()#');
       return this.af.auth.signInAnonymously()
         .then((credential: firebase.auth.UserCredential) => {
+
           const anonymousUser: AppUser = {
             uid: credential.user.uid,
             isAnonymous: credential.user.isAnonymous,
             displayName: 'Guest',
-            photoURL: credential.user.photoURL,
-            profileMode: 'foodie'
+            photoURL: '/assets/profile_placeholder.png',
+            profileMode: 'foodie',
+            address: formattedAddress
           };
+
           console.log('loginAnonymously(): Sign in successfull...');
           this.addUpdateUserDB(anonymousUser);
         })
@@ -76,25 +85,57 @@ export class AuthService {
     try {
       console.log('#Event: googleSignin()#');
       const credential = await this.af.auth.signInWithPopup(new auth.GoogleAuthProvider());
-      this.router.navigate(['/user/', credential.user.uid]);
+      console.log('googleSignin(): Success ', credential.user);
+      // this.router.navigate(['/user/', credential.user.uid]);
       // Prepare user data //
       const googleUser: AppUser = {
         uid: credential.user.uid,
         isAnonymous: credential.user.isAnonymous,
         displayName: credential.user.displayName,
         photoURL: credential.user.photoURL,
-        profileMode: 'foodie'
+        profileMode: 'host',
+        kitchenId: 'no_kitchen'
       };
+      console.log('GoogleUser: ', googleUser);
       this.addUpdateUserDB(googleUser);
     } catch (e) {
       this.handleAuthErrors(e);
     }
   }
 
+  async upgradeAnonymosToSocial(anonymousUser: AppUser) {
+    console.log('###### upgradeAnonymosToSocial ######');
+    const provider = new auth.GoogleAuthProvider();
+
+    // const credential = await this.af.auth.signInWithPopup(provider);
+    this.af.auth.currentUser.linkWithPopup(provider).then(resp => {
+      // const upgradedUser: AppUser = {
+      //   uid: resp.user.uid,
+      //   isAnonymous: resp.user.isAnonymous,
+      //   displayName: resp.user.displayName,
+      //   photoURL: resp.user.photoURL,
+      //   address: anonymousUser.address,
+      //   profileMode: 'host'
+      // };
+      console.log('Anonymous User upgraded: ', resp.user);
+      // console.log('Update User info', upgradedUser);
+      // this.addUpdateUserDB(upgradedUser);
+    }).catch(
+      (e: firebase.FirebaseError) => {
+      //   if (e.code === 'auth/provider-already-linked') {
+      //     this.addUpdateUserDB(anonymousUser);
+      //   } else {
+      //   this.handleAuthErrors(e);
+      //   }
+      this.handleAuthErrors(e);
+      });
+  }
+
   async addUpdateUserDB(user: AppUser) {
     const userRef = this.db.collection(this.userCollection).doc(user.uid);
     return userRef.set(user, { merge: true })
       .then(_ => {
+        console.log('Saved to firebase: ', user);
         // this.notify.openSnackBar(user.displayName + 'saved!!');
       }).catch(e => {
         console.log('Error: User not created' + e);
