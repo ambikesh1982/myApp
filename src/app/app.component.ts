@@ -15,22 +15,22 @@ export class AppComponent implements OnDestroy {
   constructor(private router: Router) {
     this.isLoading = false;
     this.router.events.subscribe((e: Event) => {
-      // this.checkRouterEvent(e);
+      this.checkRouterEvent(e);
     });
   }
 
-  // checkRouterEvent(e: Event): void {
-  //   if (e instanceof NavigationStart) {
-  //     this.isLoading = true;
-  //   }
-  //   if (
-  //     e instanceof NavigationEnd ||
-  //     e instanceof NavigationCancel ||
-  //     e instanceof NavigationError
-  //   ) {
-  //     this.isLoading = false;
-  //   }
-  // }
+  checkRouterEvent(e: Event): void {
+    if (e instanceof NavigationStart) {
+      this.isLoading = true;
+    }
+    if (
+      e instanceof NavigationEnd ||
+      e instanceof NavigationCancel ||
+      e instanceof NavigationError
+    ) {
+      this.isLoading = false;
+    }
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();

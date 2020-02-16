@@ -18,9 +18,9 @@ export class AuthSocialGuard implements CanActivate {
     return this.auth.currUser$.pipe(
       tap(resp => console.log('from tap: ', resp)),
       take(1),
-      map( user => !!user),
-      tap(loggedIn => {
-        if (!loggedIn) {
+      map( user => user.isAnonymous),
+      tap(dummyUser => {
+        if (dummyUser) {
           this.router.navigate(['/user']);
         }
       })

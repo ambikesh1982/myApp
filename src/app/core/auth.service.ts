@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { auth } from 'firebase';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { switchMap, tap, first } from 'rxjs/operators';
-import * as firebase from 'firebase';
+import { auth } from 'firebase/app';
+import 'firebase/firestore';
 
 
 export interface AppUser {
@@ -30,15 +30,14 @@ export class AuthService {
 
   constructor(
     private db: AngularFirestore,
-    private af: AngularFireAuth,
+    private afAuth: AngularFireAuth,
     private router: Router ) {
-    this.currUser$ = this.af.authState.pipe(
+    this.currUser$ = this.afAuth.authState.pipe(
       switchMap((user: AppUser) => {
         if (user) {
-          console.log('Rwa user from fb: ', user);
           return this.db.collection(this.userCollection).doc<AppUser>(user.uid).valueChanges();
         } else {
-          return of(null);
+          return of(this.createDummyUser());
         }
       })
     );
@@ -46,9 +45,9 @@ export class AuthService {
 
   createDummyUser(): AppUser {
     const dummyUser: AppUser = {
-      uid: '123',
+      uid: 'foodz9_dummy',
       isAnonymous: true,
-      displayName: 'Guest',
+      displayName: 'Guest User',
       photoURL: '/assets/profile_placeholder.png'
     };
     return dummyUser;
@@ -59,32 +58,12 @@ export class AuthService {
     return this.currUser$.pipe(first()).toPromise();
   }
 
-  loginAnonymously(formattedAddress: string): Promise<void> {
-      console.log('#Event: loginAnonymously()#');
-      return this.af.auth.signInAnonymously()
-        .then((credential: firebase.auth.UserCredential) => {
-
-          const anonymousUser: AppUser = {
-            uid: credential.user.uid,
-            isAnonymous: credential.user.isAnonymous,
-            displayName: 'Guest',
-            photoURL: '/assets/profile_placeholder.png',
-            profileMode: 'foodie',
-            address: formattedAddress
-          };
-
-          console.log('loginAnonymously(): Sign in successfull...');
-          this.addUpdateUserDB(anonymousUser);
-        })
-        .catch((e: firebase.FirebaseError) => {
-          this.handleAuthErrors(e);
-        });
-  }
+  
 
   async googleSignin(): Promise<void> {
     try {
       console.log('#Event: googleSignin()#');
-      const credential = await this.af.auth.signInWithPopup(new auth.GoogleAuthProvider());
+      const credential = await this.afAuth.signInWithPopup(new auth.GoogleAuthProvider());
       console.log('googleSignin(): Success ', credential.user);
       // this.router.navigate(['/user/', credential.user.uid]);
       // Prepare user data //
@@ -103,33 +82,6 @@ export class AuthService {
     }
   }
 
-  async upgradeAnonymosToSocial(anonymousUser: AppUser) {
-    console.log('###### upgradeAnonymosToSocial ######');
-    const provider = new auth.GoogleAuthProvider();
-
-    // const credential = await this.af.auth.signInWithPopup(provider);
-    this.af.auth.currentUser.linkWithPopup(provider).then(resp => {
-      // const upgradedUser: AppUser = {
-      //   uid: resp.user.uid,
-      //   isAnonymous: resp.user.isAnonymous,
-      //   displayName: resp.user.displayName,
-      //   photoURL: resp.user.photoURL,
-      //   address: anonymousUser.address,
-      //   profileMode: 'host'
-      // };
-      console.log('Anonymous User upgraded: ', resp.user);
-      // console.log('Update User info', upgradedUser);
-      // this.addUpdateUserDB(upgradedUser);
-    }).catch(
-      (e: firebase.FirebaseError) => {
-      //   if (e.code === 'auth/provider-already-linked') {
-      //     this.addUpdateUserDB(anonymousUser);
-      //   } else {
-      //   this.handleAuthErrors(e);
-      //   }
-      this.handleAuthErrors(e);
-      });
-  }
 
   async addUpdateUserDB(user: AppUser) {
     const userRef = this.db.collection(this.userCollection).doc(user.uid);
@@ -144,21 +96,6 @@ export class AuthService {
 
 
   handleAuthErrors(e: firebase.FirebaseError) {
-    // this.notify.openSnackBar(e.code);
-    // Firebase Auth Error Codes...
-    // auth/app-deleted
-    // auth/app-not-authorized
-    // auth/argument-error
-    // auth/invalid-api-key
-    // auth/invalid-user-token
-    // auth/network-request-failed
-    // auth/operation-not-allowed
-    // auth/requires-recent-login
-    // auth/too-many-requests
-    // auth/unauthorized-domain
-    // auth/user-disabled
-    // auth/user-token-expired
-    // auth/web-storage-unsupported
     switch (e.code) {
       case 'auth/operation-not-allowed':
         console.log('Error:... auth not enabled in the Firebase Console.');
@@ -171,7 +108,7 @@ export class AuthService {
   }
 
   async signOut() {
-    await this.af.auth.signOut();
+    await this.afAuth.signOut();
     // this.notify.openSnackBar('We will miss you!');
     this.router.navigate(['welcome']);
   }
