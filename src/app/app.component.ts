@@ -29,6 +29,7 @@ export class AppComponent implements OnDestroy {
       e instanceof NavigationError
     ) {
       this.isLoading = false;
+      console.log(e);
     }
   }
 

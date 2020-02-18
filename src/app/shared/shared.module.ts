@@ -1,20 +1,23 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
+import { NgModule } from '@angular/core';
 import { MaterialModule } from '../material/material.module';
+import { AppToolbarComponent } from './app-toolbar/app-toolbar.component';
 import { DialogContactCardComponent } from './dialog-contact-card/dialog-contact-card.component';
-import { TruncatePipe } from './truncate.pipe';
 import { GooglePlacesDirective } from './google-places.directive';
+import { ImgUploadComponent } from './img-upload/img-upload.component';
+import { TruncatePipe } from './truncate.pipe';
 
 const SHARED_COMPONENTS = [
   AppToolbarComponent,
+  ImgUploadComponent,
   TruncatePipe,
   GooglePlacesDirective,
 ];
 
 
 @NgModule({
-  declarations: [AppToolbarComponent, DialogContactCardComponent, GooglePlacesDirective, TruncatePipe],
+  // declarations: [AppToolbarComponent, DialogContactCardComponent, GooglePlacesDirective, ImgUploadComponent, TruncatePipe],
+  declarations: [SHARED_COMPONENTS, DialogContactCardComponent],
   imports: [
     CommonModule,
     MaterialModule,

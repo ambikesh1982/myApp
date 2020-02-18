@@ -1,0 +1,22 @@
+<mat-card>
+    <div *ngIf="snapshot|async as snap"></div>
+    <div *ngIf="downloadURL as url">
+        <img mat-card-image [src]="url">
+        <button class="top-right" mat-icon-button (click)="deleteImage(url)">
+            <mat-icon color="accent">cancel</mat-icon>
+        </button>
+    </div>
+
+
+    <div *ngIf="selectedFileCount===0">
+        <button mat-raised-button color="primary" style="float:initial; width: 100%" (click)="chooseFile.click()"
+            [disabled]="selectedFileCount < maxFileUploadCount ? false: true ">
+            <mat-icon>file_upload</mat-icon> Upload Image
+        </button>
+        <input #chooseFile style="display:none;" type="file" accept="image/.*,capture=camera"
+            (change)="startUpload($event.target.files)">
+    </div>
+    <mat-card-footer *ngIf="uploadPercent$|async as pct">
+        <mat-progress-bar mode="buffer" bufferValue="0" [value]="pct"></mat-progress-bar>
+    </mat-card-footer>
+</mat-card>

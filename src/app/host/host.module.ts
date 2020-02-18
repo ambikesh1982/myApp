@@ -5,6 +5,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SharedModule } from '../shared/shared.module';
 import { MaterialModule } from '../material/material.module';
 import { AuthSocialGuard } from '../core/auth-social.guard';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 const hostRoutes: Routes = [
   {
@@ -18,8 +20,11 @@ const hostRoutes: Routes = [
   declarations: [AddKitchenComponent],
   imports: [
     CommonModule,
+    FlexLayoutModule,
+    FormsModule,
     MaterialModule,
     SharedModule,
+    ReactiveFormsModule,
     RouterModule.forChild(hostRoutes),
   ]
 })

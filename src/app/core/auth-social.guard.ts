@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 import { map, tap, take } from 'rxjs/operators';
 
@@ -8,9 +8,7 @@ import { map, tap, take } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthSocialGuard implements CanActivate {
-  constructor(private auth: AuthService, private router: Router) {
-    console.log('AuthSocialGuard: Start');
-   }
+  constructor(private auth: AuthService, private router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
@@ -18,21 +16,16 @@ export class AuthSocialGuard implements CanActivate {
     return this.auth.currUser$.pipe(
       tap(resp => console.log('from tap: ', resp)),
       take(1),
-      map( user => user.isAnonymous),
-      tap(dummyUser => {
-        if (dummyUser) {
+      map( user => !user.isAnonymous),
+      tap(socialUser => {
+        console.log('socialUser?: ', socialUser);
+        if (!socialUser) {
           this.router.navigate(['/user']);
+          return false;
         }
+        console.log('AuthSocialGuard returns ', true);
+        return true;
       })
     );
   }
 }
-
-    //   } else {
-    //     console.log('Anonymous User >>>>>> : Redirecting to User page');
-    //     this.router.navigate(['user', user.uid], { queryParams: { returnUrl: state.url } });
-    //     return false;
-    //   }
-    // } else {
-    //   console.log('Unauthorised User >>>>>> : Redirecting to Welcome page');
-    //   this.router.navigate(['welcome']);

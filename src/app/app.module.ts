@@ -2,7 +2,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AngularFireModule } from '@angular/fire';
+import 'firebase/firestore';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
+import 'firebase/storage';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireAuthGuardModule } from '@angular/fire/auth-guard';
@@ -21,6 +23,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -40,6 +43,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     FlexLayoutModule,
     LayoutModule,
+    ReactiveFormsModule,
+    FormsModule,
     SharedModule,
     AppRoutingModule,
   ],

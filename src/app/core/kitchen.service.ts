@@ -38,29 +38,26 @@ export class KitchenService {
     return this.afs.createId();
   }
 
-  initializeKitchen(): Kitchen {
-    return {
-      id: null,
-      ownerId: null,
-      title: null,
-      email: null,
-      mobileNo: null,
-      address: null,
-      image: { path: '', url: '' },
-      description: null,
-      pureVeg: false,
-      menuItemCount: 0,
-      likeCount: 0,
-      website: null,
-      createdAt: null,
-    };
-  }
+  // initializeKitchen(): Kitchen {
+  //   return {
+  //     id: null,
+  //     ownerId: null,
+  //     title: null,
+  //     email: null,
+  //     mobileNo: null,
+  //     address: null,
+  //     image: { path: '', url: '' },
+  //     description: null,
+  //     pureVeg: false,
+  //     menuItemCount: 0,
+  //     likeCount: 0,
+  //     website: null,
+  //     createdAt: null,
+  //   };
+  // }
 
   getKitchenByID(id: string): Observable<Kitchen> {
     console.log('getKitchenByID: ', id);
-    if (id === 'new') {
-      return of(this.initializeKitchen());
-    }
     const kitchen = `${this.kitchensCollection}/${id}`;
     return this.afs.doc<any>(kitchen).valueChanges().pipe(
       tap(console.log),

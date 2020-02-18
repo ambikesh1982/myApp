@@ -14,7 +14,6 @@ import { tap } from 'rxjs/operators';
 export class UserProfileComponent {
 
   currentUser$: Observable<AppUser>;
-  user: AppUser;
   userForm: FormGroup;
 
   constructor(

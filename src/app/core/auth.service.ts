@@ -5,7 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { switchMap, tap, first } from 'rxjs/operators';
 import { auth } from 'firebase/app';
-import 'firebase/firestore';
+
 
 
 export interface AppUser {
@@ -58,7 +58,7 @@ export class AuthService {
     return this.currUser$.pipe(first()).toPromise();
   }
 
-  
+
 
   async googleSignin(): Promise<void> {
     try {

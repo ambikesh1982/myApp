@@ -31,8 +31,10 @@ export class AppShellComponent implements OnDestroy {
 
   handleKitchenRedirect(kitchenId: string) {
     if (kitchenId) {
+      console.log('Redirecting >>> host/kitchen/kitchenId');
       this.router.navigate(['host', 'kitchen', kitchenId]);
     } else {
+      console.log('Redirecting >>> host/kitchen/*new');
       this.router.navigate(['host', 'kitchen', '*new']);
     }
   }
