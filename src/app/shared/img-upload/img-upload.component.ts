@@ -13,7 +13,7 @@ export interface ImageObj { path: string; url: string; }
 export class ImgUploadComponent implements OnInit, OnDestroy {
 
   @Input() image: ImageObj;
-  @Input() storageBucket: string;
+  @Input() bucket: string;
   @Output() imageUploaded = new EventEmitter<ImageObj>();
   selectedFileCount: number;
   maxFileUploadCount: number;
@@ -33,7 +33,10 @@ export class ImgUploadComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    console.log('Image url from parent component: ', this.image);
+    console.log('Inputs from parent component...');
+    console.log('1. image: ', this.image);
+    console.log('2. image: ', this.bucket);
+
     if (this.image) {
       if (this.image.path && this.image.url) {
         this.currentImage = this.image;
@@ -48,24 +51,25 @@ export class ImgUploadComponent implements OnInit, OnDestroy {
   startUpload(imageFiles: FileList) {
     console.log('From fileController');
     if (imageFiles[0]) {
+      console.log('Selected file: ', imageFiles[0]);
 
-      const image = imageFiles[0];
-      const imagePath = `${this.storageBucket}/${Date.now()}_${image.name}`;
-      const storageRef = this.storage.ref(imagePath);
-      const uploadTask = this.storage.upload(imagePath, image);
+      // const image = imageFiles[0];
+      // const imagePath = `${this.bucket}/${Date.now()}_${image.name}`;
+      // const storageRef = this.storage.ref(imagePath);
+      // const uploadTask = this.storage.upload(imagePath, image);
 
-      // Watch file upload process...
-      this.uploadPercent$ = uploadTask.percentageChanges();
+      // // Watch file upload process...
+      // this.uploadPercent$ = uploadTask.percentageChanges();
 
-      this.snapshot = uploadTask.snapshotChanges().pipe(
-        tap(console.log),
-        finalize(async () => {
-          this.downloadURL = await storageRef.getDownloadURL().toPromise();
-          this.updateFileCount(1);
-          this.currentImage = { path: imagePath, url: this.downloadURL };
-          this.imageUploaded.emit(this.currentImage);
-        })
-      );
+      // this.snapshot = uploadTask.snapshotChanges().pipe(
+      //   tap(console.log),
+      //   finalize(async () => {
+      //     this.downloadURL = await storageRef.getDownloadURL().toPromise();
+      //     this.updateFileCount(1);
+      //     this.currentImage = { path: imagePath, url: this.downloadURL };
+      //     this.imageUploaded.emit(this.currentImage);
+      //   })
+      // );
     }
   }
 

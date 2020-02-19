@@ -13,7 +13,7 @@ export class UnAuthGuard implements CanActivate {
     state: RouterStateSnapshot): Promise<boolean> {
     const user = await this.authService.getCurrentUser();
     const loggedIn = !!user;
-    if (loggedIn) {
+    if (loggedIn && !user.isAnonymous) {
       console.log('LoggedIn User: Redirecting to Main page');
       this.router.navigate(['foodie', 'kitchens']);
       return false;

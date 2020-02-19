@@ -26,7 +26,9 @@ export class AppShellComponent implements OnDestroy {
     public auth: AuthService,
     private notify: SnackbarNotificationService,
     private router: Router) {
-    this.currAppUser$ = this.auth.currUser$;
+    this.currAppUser$ = this.auth.currUser$.pipe(
+      tap ( user => this.notify.openSnackBar('Welcome ', user.displayName))
+    );
   }
 
   handleKitchenRedirect(kitchenId: string) {
@@ -34,8 +36,8 @@ export class AppShellComponent implements OnDestroy {
       console.log('Redirecting >>> host/kitchen/kitchenId');
       this.router.navigate(['host', 'kitchen', kitchenId]);
     } else {
-      console.log('Redirecting >>> host/kitchen/*new');
-      this.router.navigate(['host', 'kitchen', '*new']);
+      console.log('Redirecting >>> host/kitchen/new');
+      this.router.navigate(['host', 'kitchen', 'new']);
     }
   }
 
