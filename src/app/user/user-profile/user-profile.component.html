@@ -11,25 +11,32 @@
             </mat-card-subtitle>
         </mat-card-header>
         <br>
-        <mat-card-content *ngIf="cu.isAnonymous">
-            <p>Become a home chef in 3 easy steps :)</p>
-            
-            <mat-list fxLayout="row wrap">
-                <mat-list-item>
-                    <mat-icon matListIcon>verified_user</mat-icon>
-                    <h3 matLine> Sign in with <span style="color: blue">Google</span> account. </h3>
-                </mat-list-item>
-                <mat-list-item>
-                    <mat-icon matListIcon>kitchen</mat-icon>
-                    <h3 matLine> Create your kitchen. </h3>
-                </mat-list-item>
-                <mat-list-item>
-                    <mat-icon matListIcon>playlist_add</mat-icon>
-                    <h3 matLine> Add menu items </h3>
-                </mat-list-item>
-            </mat-list>
+        <mat-card-content>
+            <div *ngIf="!cu.kitchenId; else hasKitchen">
+                <p>Become a home chef in 3 easy steps :)</p>
+                
+                <mat-list fxLayout="row wrap">
+                    <mat-list-item>
+                        <mat-icon matListIcon>verified_user</mat-icon>
+                        <h3 matLine> Sign in with <span style="color: blue">Google</span> account. </h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListIcon>kitchen</mat-icon>
+                        <h3 matLine> Create your kitchen. </h3>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <mat-icon matListIcon>playlist_add</mat-icon>
+                        <h3 matLine> Add menu items </h3>
+                    </mat-list-item>
+                </mat-list>
+            </div> 
+            <ng-template #hasKitchen *ngIf="kitchen$|async as kitchen">
+
+            </ng-template>           
             
         </mat-card-content>
+
+
     </mat-card>
     <button mat-fab style="position: fixed; bottom:20px; z-index: 99; right:20px" class="mat-elevation-z4"
         (click)="loginWithGoogle(cu)">

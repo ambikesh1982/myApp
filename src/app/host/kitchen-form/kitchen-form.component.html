@@ -1,0 +1,50 @@
+<div *ngIf="kitchenIn as kitchen">
+<mat-card>
+    <form style="font-size: small;" fxLayout="column" [formGroup]="kitchenForm">
+
+        <mat-form-field>
+            <mat-label>Title</mat-label>
+            <input matInput type="text" placeholder="Enter kitchen name..." formControlName="title">
+        </mat-form-field>
+
+        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+            <mat-form-field fxFlex=60>
+                <mat-label>Email</mat-label>
+                <input matInput type="email" placeholder="Ex. foodz9@gmail.com" formControlName="email">
+                <mat-error *ngIf="kitchenForm.hasError('email')">
+                    Please enter a valid email address
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field fxFlex=35>
+                <mat-label>Telephone</mat-label>
+                <span matPrefix>+1 &nbsp;</span>
+                <input type="tel" matInput placeholder="555-555-1234" formControlName="mobileNo">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline">
+            <mat-label>Enter your address...</mat-label>
+            <input type="text" matInput appGooglePlaces formControlName="address"
+                (addressFromGoogle)="addAddress($event)" (click)="resetInput()">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <textarea matInput type="text" placeholder="Write something about your kitchen..."
+                formControlName="description"></textarea>
+        </mat-form-field>
+
+
+        <app-img-upload #upload [image]="kitchenForm.get('image').value" [bucket]="kitchenImageBucket"
+            (imageUploaded)="addImage($event)">
+        </app-img-upload>
+
+    </form>
+</mat-card>
+
+<button mat-fab style="position: fixed; bottom:20px; right: 20px; z-index:99"
+    (click)="prepareKitchen()">
+    <mat-icon>done</mat-icon>
+</button>
+</div>

@@ -76,7 +76,7 @@ export class KitchenService {
     const kitchenDocRef = this.afs.doc(`${this.kitchensCollection}/${kid}`).ref;
     const batch = this.afs.firestore.batch();
     batch.set(itemDocRef, menu);
-    batch.set(kitchenDocRef, { menuItemsCount: this.increment }, { merge: true });
+    batch.set(kitchenDocRef, { menuItemCount: this.increment }, { merge: true });
     return batch.commit();
     // return this.afs.collection<IMenuItem>(path).add(menu);
   }
