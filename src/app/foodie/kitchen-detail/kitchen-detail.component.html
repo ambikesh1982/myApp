@@ -49,7 +49,7 @@
     <div fxLayout="row wrap" fxLayoutAlign="space-around center">
         <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 class="app-card" style="margin-top:4px"
             *ngFor="let menuItem of menu$|async">
-            <img *ngIf="menuItem.image" class="card-image" mat-card-image [src]="menuItem.image.url" [alt]="menuItem.title">
+            <img *ngIf="menuItem.image && menuItem.image.url" class="card-image" mat-card-image [src]="menuItem.image.url" [alt]="menuItem.title">
             <mat-card-header>
                 <mat-card-title [style.color]="menuItem.isNonVeg? 'red':'green'">{{menuItem.title}}</mat-card-title>
                 <mat-card-subtitle>

@@ -38,24 +38,6 @@ export class KitchenService {
     return this.afs.createId();
   }
 
-  // initializeKitchen(): Kitchen {
-  //   return {
-  //     id: null,
-  //     ownerId: null,
-  //     title: null,
-  //     email: null,
-  //     mobileNo: null,
-  //     address: null,
-  //     image: { path: '', url: '' },
-  //     description: null,
-  //     pureVeg: false,
-  //     menuItemCount: 0,
-  //     likeCount: 0,
-  //     website: null,
-  //     createdAt: null,
-  //   };
-  // }
-
   getKitchenByID(id: string): Observable<Kitchen> {
     console.log('getKitchenByID: ', id);
     const kitchen = `${this.kitchensCollection}/${id}`;
@@ -79,11 +61,33 @@ export class KitchenService {
   // Create Kitchen: Called from AddKitchenComponent
   async addUpdateKitchen(kitchen: Kitchen): Promise<void> {
     const batch = this.afs.firestore.batch();
-    const userDocRef = this.afs.collection('users').doc(kitchen.ownerId).ref;
+    const userDocRef = this.afs.collection(this.userCollection).doc(kitchen.ownerId).ref;
     const kitchenDocRef = this.afs.collection(this.kitchensCollection).doc(kitchen.id).ref;
 
     batch.set(kitchenDocRef, kitchen, { merge: true });
     batch.set(userDocRef, { kitchenId: kitchen.id }, { merge: true });
+    return batch.commit();
+  }
+
+  createMenuItem(kid: string, menu: IMenuItem) {
+    const path = `${this.kitchensCollection}/${kid}/${this.menuSubCollection}`;
+    const itemId = this.newFirebaseDocumentKey;
+    const itemDocRef = this.afs.collection(path).doc(itemId).ref;
+    const kitchenDocRef = this.afs.doc(`${this.kitchensCollection}/${kid}`).ref;
+    const batch = this.afs.firestore.batch();
+    batch.set(itemDocRef, menu);
+    batch.set(kitchenDocRef, { menuItemsCount: this.increment }, { merge: true });
+    return batch.commit();
+    // return this.afs.collection<IMenuItem>(path).add(menu);
+  }
+
+  async deleteMenuItem(kid: string, itemId: string) {
+    const path = `${this.kitchensCollection}/${kid}/${this.menuSubCollection}`;
+    const itemDocRef = this.afs.collection(path).doc(itemId).ref;
+    const kitchenDocRef = this.afs.doc(`${this.kitchensCollection}/${kid}`).ref;
+    const batch = this.afs.firestore.batch();
+    batch.delete(itemDocRef);
+    batch.set(kitchenDocRef, { menuItemsCount: this.decrement }, { merge: true });
     return batch.commit();
   }
 

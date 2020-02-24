@@ -54,7 +54,6 @@ export class AuthService {
   }
 
   async getCurrentUser(): Promise<AppUser> {
-    // console.log('From getCurrentUser');
     return this.currUser$.pipe(first()).toPromise();
   }
 
@@ -73,7 +72,7 @@ export class AuthService {
         displayName: credential.user.displayName,
         photoURL: credential.user.photoURL,
         profileMode: 'host',
-        kitchenId: 'no_kitchen'
+        kitchenId: null
       };
       console.log('GoogleUser: ', googleUser);
       this.addUpdateUserDB(googleUser);

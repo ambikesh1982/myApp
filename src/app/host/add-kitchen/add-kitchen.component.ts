@@ -1,12 +1,12 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { Kitchen } from 'src/app/foodie/kitchen';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { switchMap, tap } from 'rxjs/operators';
+import { AuthService, AppUser } from 'src/app/core/auth.service';
 import { KitchenService } from 'src/app/core/kitchen.service';
 import { LayoutService } from 'src/app/core/layout.service';
-import { AuthService } from 'src/app/core/auth.service';
+import { Kitchen } from 'src/app/foodie/kitchen';
 
 
 @Component({
@@ -19,22 +19,29 @@ export class AddKitchenComponent implements OnInit, OnDestroy {
   kitchen$: Observable<Kitchen>;
   kitchenForm: FormGroup;
   kitchenImageBucket: string;
+  isNewKitchen: boolean;
+  currUser: AppUser;
 
   constructor(
     private authService: AuthService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private ks: KitchenService,
-    private layoutService: LayoutService) {
-      this.createEmptyForm();
-    }
+    private layoutService: LayoutService,
+    private router: Router) {
+    this.authService.getCurrentUser()
+      .then(user => this.currUser = user)
+      .catch(e => console.log('Error: Fetching CurrUser: ', e));
+    this.kitchenImageBucket = 'kitchens';
+    this.createEmptyForm();
+  }
 
   ngOnInit(): void {
     this.kitchen$ = this.route.paramMap.pipe(
       switchMap(params => {
         const kitchenId = params.get('id');
-        const isNewKitchen = kitchenId === 'new';
-        if (isNewKitchen) {
+        this.isNewKitchen = kitchenId === 'new';
+        if (this.isNewKitchen) {
           return of(this.createEmptyKitchenObject());
         } else {
           return this.ks.getKitchenByID(kitchenId);
@@ -46,6 +53,16 @@ export class AddKitchenComponent implements OnInit, OnDestroy {
         this.populateKitchenForm(kitchen);
       })
     );
+  }
+
+  prepareKitchen(formData: any, kitchen: Kitchen) {
+    const tempKitchen: Kitchen = { ...kitchen, ...this.kitchenForm.value };
+    console.log('Original Kitchen: ', kitchen);
+    console.log('Updated Kitchen: ', tempKitchen);
+    if (JSON.stringify(kitchen) === JSON.stringify(tempKitchen)) {
+      console.log('No changes to kitchen data');
+    } else { console.log('Kitchen data updated'); }
+    // this.createKitchen(tempKitchen);
   }
 
   populateKitchenForm(kitchen: Kitchen) {
@@ -74,10 +91,13 @@ export class AddKitchenComponent implements OnInit, OnDestroy {
     });
   }
 
-    createEmptyKitchenObject(): Kitchen {
+  createEmptyKitchenObject(): Kitchen {
+    const currUserId = this.currUser.uid;
+    const docId = this.ks.newFirebaseDocumentKey;
+    this.isNewKitchen = true;
     return {
-      id: null,
-      ownerId: null,
+      id: docId,
+      ownerId: currUserId,
       title: null,
       email: null,
       mobileNo: null,
@@ -107,14 +127,23 @@ export class AddKitchenComponent implements OnInit, OnDestroy {
     this.kitchenForm.get('address').reset();
   }
 
-  // async createKitchen() {}
   reInitializeKitchen() {
+    console.log('reInitializeKitchen()');
     this.kitchen$ = of(this.createEmptyKitchenObject());
   }
 
-  ngOnDestroy() {
-    console.log('CreateKitchenComponent destroyed!!');
-    this.resetInput();
+  async createKitchen(kitchen: Kitchen) {
+    kitchen.createdAt = this.ks.serverTimestampFromFirestore;
+    this.ks.addUpdateKitchen(kitchen).then(
+      () => {
+        console.log('Redirecting to>>>', kitchen.id);
+        this.router.navigate(['host', 'kitchen', kitchen.id]);
+      }).catch(e => console.error('createKitchen: ', e));
   }
+
+ngOnDestroy() {
+  console.log('CreateKitchenComponent destroyed!!');
+  this.resetInput();
+}
 
 }

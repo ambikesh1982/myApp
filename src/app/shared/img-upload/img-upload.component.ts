@@ -53,23 +53,23 @@ export class ImgUploadComponent implements OnInit, OnDestroy {
     if (imageFiles[0]) {
       console.log('Selected file: ', imageFiles[0]);
 
-      // const image = imageFiles[0];
-      // const imagePath = `${this.bucket}/${Date.now()}_${image.name}`;
-      // const storageRef = this.storage.ref(imagePath);
-      // const uploadTask = this.storage.upload(imagePath, image);
+      const image = imageFiles[0];
+      const imagePath = `${this.bucket}/${Date.now()}_${image.name}`;
+      const storageRef = this.storage.ref(imagePath);
+      const uploadTask = this.storage.upload(imagePath, image);
 
-      // // Watch file upload process...
-      // this.uploadPercent$ = uploadTask.percentageChanges();
+      // Watch file upload process...
+      this.uploadPercent$ = uploadTask.percentageChanges();
 
-      // this.snapshot = uploadTask.snapshotChanges().pipe(
-      //   tap(console.log),
-      //   finalize(async () => {
-      //     this.downloadURL = await storageRef.getDownloadURL().toPromise();
-      //     this.updateFileCount(1);
-      //     this.currentImage = { path: imagePath, url: this.downloadURL };
-      //     this.imageUploaded.emit(this.currentImage);
-      //   })
-      // );
+      this.snapshot = uploadTask.snapshotChanges().pipe(
+        tap(console.log),
+        finalize(async () => {
+          this.downloadURL = await storageRef.getDownloadURL().toPromise();
+          this.updateFileCount(1);
+          this.currentImage = { path: imagePath, url: this.downloadURL };
+          this.imageUploaded.emit(this.currentImage);
+        })
+      );
     }
   }
 

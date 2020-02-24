@@ -23,6 +23,7 @@ export class UserProfileComponent {
     private layout: LayoutService
   ) {
     this.layout.appToolBar$.next({
+      showSideNavToggleIcon: true,
       pageTitle: 'My Profile',
       showGoBackIcon: true
     });

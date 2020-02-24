@@ -7,17 +7,22 @@ import { MaterialModule } from '../material/material.module';
 import { AuthSocialGuard } from '../core/auth-social.guard';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MyKitchenComponent } from './my-kitchen/my-kitchen.component';
 
 const hostRoutes: Routes = [
   {
-    path: 'kitchen/:id',
+    path: ':id/manage',
     component: AddKitchenComponent,
+  },
+  {
+    path: ':id/myKitchen',
+    component: MyKitchenComponent,
   }
 ];
 
 
 @NgModule({
-  declarations: [AddKitchenComponent],
+  declarations: [AddKitchenComponent, MyKitchenComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,
