@@ -41,6 +41,7 @@ export class KitchenService {
   getKitchenByID(id: string): Observable<Kitchen> {
     console.log('getKitchenByID: ', id);
     const kitchen = `${this.kitchensCollection}/${id}`;
+    console.log('getKitchenByID: ', kitchen);
     return this.afs.doc<any>(kitchen).valueChanges().pipe(
       tap(console.log),
       catchError(this.handleError)
@@ -71,11 +72,11 @@ export class KitchenService {
 
   createMenuItem(kid: string, menu: IMenuItem) {
     const path = `${this.kitchensCollection}/${kid}/${this.menuSubCollection}`;
-    const itemId = this.newFirebaseDocumentKey;
-    const itemDocRef = this.afs.collection(path).doc(itemId).ref;
+    // const itemId = this.newFirebaseDocumentKey;
+    const itemDocRef = this.afs.collection(path).doc(menu.menuId).ref;
     const kitchenDocRef = this.afs.doc(`${this.kitchensCollection}/${kid}`).ref;
     const batch = this.afs.firestore.batch();
-    batch.set(itemDocRef, menu);
+    batch.set(itemDocRef, menu, { merge: true });
     batch.set(kitchenDocRef, { menuItemCount: this.increment }, { merge: true });
     return batch.commit();
     // return this.afs.collection<IMenuItem>(path).add(menu);
