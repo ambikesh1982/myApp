@@ -9,6 +9,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MyKitchenComponent } from './my-kitchen/my-kitchen.component';
 import { KitchenFormComponent } from './kitchen-form/kitchen-form.component';
+import { MenuFormComponent } from './menu-form/menu-form.component';
 
 const hostRoutes: Routes = [
   {
@@ -23,7 +24,7 @@ const hostRoutes: Routes = [
 
 
 @NgModule({
-  declarations: [AddKitchenComponent, MyKitchenComponent, KitchenFormComponent],
+  declarations: [AddKitchenComponent, MyKitchenComponent, KitchenFormComponent, MenuFormComponent],
   imports: [
     CommonModule,
     FlexLayoutModule,

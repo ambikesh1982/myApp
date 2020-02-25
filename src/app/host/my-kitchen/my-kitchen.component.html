@@ -14,64 +14,28 @@
                 <span>{{kitchen.likeCount}}</span>
             </div>
         </mat-card-actions>
+        <button 
+            *ngIf="!showMenuTemplate"
+            mat-stroked-button 
+            style="width:100%" 
+            color="accent"
+            (click)="showAddMenuTemplate(true)">Add menu item
+        </button>
+
     </mat-card>
 
-    <mat-card>
-        <form [formGroup]="menuForm" fxLayout="column">
-            <mat-form-field class="product-full-width">
-                <input matInput type="text" required formControlName="title" placeholder="Add menu item..."
-                    (click)="showAddMenuTemplate(true)">
-            </mat-form-field>
-            <div *ngIf="showMenuTemplate" fxLayout="column">
-            <div fxFlexLayout="row wrap" fxLayoutAlign="space-between stretch">
-                <mat-slide-toggle labelPosition="before" matInput formControlName="isNonVeg" required>Is Non-Veg
-                </mat-slide-toggle>
-                <mat-form-field fxFlex="0 1 30">
-                    <input matInput type="number" formControlName="price" required>
-                    <span matPrefix>$&nbsp;</span>
-                    <span matSuffix>.00</span>
-                </mat-form-field>
-            </div>
-            <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
-                <mat-form-field fxFlex=45>
-                    <mat-label>Availability</mat-label>
-                    <mat-select formControlName="availability" multiple>
-                        <mat-option *ngFor="let topping of avalability" [value]="topping">{{topping}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
+    <div>
+        <app-menu-form *ngIf="showMenuTemplate" [menuIn]="selectedMenuItem" (menuOut)="collectMenuOut($event)"></app-menu-form>
+    </div>
 
-                <mat-form-field fxFlex=45>
-                    <mat-label>Pre-Order</mat-label>
-                    <mat-select formControlName="preOrder">
-                        <mat-option *ngFor="let topping of preOrder" [value]="topping">{{topping}}</mat-option>
-                    </mat-select>
-                </mat-form-field>
-
-            </div>
-                <app-img-upload #upload [image]="menuForm.get('image').value" [bucket]="imageBucket"
-                    (imageUploaded)="addImage($event)">
-                </app-img-upload>
-            </div>
-    
-        </form>
-    
-        <mat-card-actions *ngIf="showMenuTemplate" align="right">
-            <button mat-stroked-button (click)="showAddMenuTemplate(false)">
-                Cancel
-            </button>
-            <button mat-stroked-button (click)="addMenuItem(menuForm.value)" [disabled]="!menuForm.valid">
-                Add
-            </button>
-        </mat-card-actions>
-    </mat-card>
-
-    <div *ngIf="menuItems$|async as menu"
-        fxLayout="row wrap" fxLayoutAlign="space-around center">
+    <div *ngIf="menuItems$|async as menu" fxLayout="row wrap" fxLayoutAlign="space-around center">
         <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 class="app-card" style="margin-top:4px"
-            *ngFor="let menuItem of menu">
-            <img *ngIf="menuItem.image" class="card-image" mat-card-image [src]="menuItem.image.url" [alt]="menuItem.title">
+            *ngFor="let menuItem of menu"
+            (click)="editMenuItem(menuItem)">
+            <img *ngIf="menuItem.image && menuItem.image.url" class="card-image" mat-card-image [src]="menuItem.image.url"
+                [alt]="menuItem.title">
             <mat-card-header>
-                <mat-card-title [style.color]="menuItem.isNonVeg? 'red':'green'">{{menuItem.title}}</mat-card-title>
+                <mat-card-title [style.color]="menuItem.dietType == 'nonveg'? 'red':'green'">{{menuItem.title}}</mat-card-title>
                 <mat-card-subtitle>
                     CAD {{menuItem.price}} / Good for {{menuItem.serving}} persons
                 </mat-card-subtitle>
@@ -84,7 +48,7 @@
                 <li>Pre-Order: 1 day in advance</li>
                 <li>Avaibility: {{menuItem.availability?menuItem.availability:'All Days'}}</li>
             </mat-card-content>
-    
+
         </mat-card>
     </div>
 

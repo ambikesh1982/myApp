@@ -19,11 +19,12 @@ export interface IMenuItem {
   menuId: string;
   title: string;
   price: number;
-  image: {path: string, url: string};
-  isNonVeg: boolean;
+  dietType: string;
   serving: number;
+  image?: {path: string, url: string};
   orderType?: string;
   orderTime?: string;
+  preOrder?: string;
   availability?: string[];
   description?: string;
   // createdAt?: firebase.firestore.FieldValue;

@@ -51,7 +51,7 @@
             *ngFor="let menuItem of menu$|async">
             <img *ngIf="menuItem.image && menuItem.image.url" class="card-image" mat-card-image [src]="menuItem.image.url" [alt]="menuItem.title">
             <mat-card-header>
-                <mat-card-title [style.color]="menuItem.isNonVeg? 'red':'green'">{{menuItem.title}}</mat-card-title>
+                <mat-card-title [style.color]="menuItem.dietType == 'nonveg'? 'red':'green'">{{menuItem.title}}</mat-card-title>
                 <mat-card-subtitle>
                     CAD {{menuItem.price}} / Good for {{menuItem.serving}} persons
                 </mat-card-subtitle>

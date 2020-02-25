@@ -1,7 +1,13 @@
 <div *ngIf="kitchen$|async as kitchen; else nokitchen">
-    <app-kitchen-form [kitchenIn]="kitchen" (kitchenOut)="collectKitchenOut($event)"></app-kitchen-form>
+    <app-kitchen-form 
+        [kitchenIn]="kitchen" 
+        (kitchenOut)="collectKitchenOut($event)">
+    </app-kitchen-form>
 </div>
 
 <ng-template #nokitchen>
-    <app-kitchen-form [kitchenIn]="createEmptyKitchenObject()" (kitchenOut)="collectKitchenOut($event)"></app-kitchen-form>
+    <app-kitchen-form 
+        [kitchenIn]="createEmptyKitchenObject()" 
+        (kitchenOut)="collectKitchenOut($event)">
+    </app-kitchen-form>
 </ng-template>
