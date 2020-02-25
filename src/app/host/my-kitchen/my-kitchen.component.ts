@@ -106,6 +106,7 @@ export class MyKitchenComponent implements OnInit {
       console.log('Null returned');
     } else {
       console.log('menuOut: ', menu);
+      this.addMenuItem(menu);
     }
   }
 
