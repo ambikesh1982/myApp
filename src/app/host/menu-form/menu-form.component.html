@@ -45,9 +45,8 @@
     <button mat-stroked-button (click)="onClickCancel()">
         Cancel
     </button>
-    <button mat-stroked-button  (click)="onClickSave()">
+    <button mat-stroked-button  (click)="onClickSave()" [disabled]="!menuForm.valid">
         Add
     </button>
 </mat-card-actions>
-<p>{{menuForm.valid}}</p>
 </mat-card>
