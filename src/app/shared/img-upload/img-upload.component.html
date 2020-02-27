@@ -1,7 +1,7 @@
 <mat-card>
     <div *ngIf="snapshot|async as snap"></div>
     <div *ngIf="downloadURL as url">
-        <img mat-card-image [src]="url">
+        <img mat-card-image [src]="url" accept="image/*;capture=camera">
         <button class="top-right" mat-icon-button (click)="deleteImage(url)">
             <mat-icon color="accent">cancel</mat-icon>
         </button>
