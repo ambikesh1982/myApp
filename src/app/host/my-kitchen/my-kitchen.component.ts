@@ -40,6 +40,7 @@ export class MyKitchenComponent implements OnInit {
             console.log('Kitchen details >>>> ', k);
           } else {
             console.log('Kitchen not found. Redirect to Create-Kitchen page');
+            this.router.navigate(['**']);
           }
         })
       );

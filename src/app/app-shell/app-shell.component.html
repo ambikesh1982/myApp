@@ -5,6 +5,10 @@
     <div *ngIf="currAppUser$|async as cu;">
       <mat-toolbar>{{cu.displayName}}</mat-toolbar>
       <mat-nav-list>
+        <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="/">
+          <mat-icon matListIcon>home</mat-icon>
+          <span matLine>Home</span>
+        </a>
         <a mat-list-item
           routerLinkActive="active" 
           (click)="drawer.close() && handleKitchenRedirect(cu.kitchenId)">

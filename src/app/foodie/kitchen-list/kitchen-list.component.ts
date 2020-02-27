@@ -34,7 +34,7 @@ export class KitchenListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.layout.appToolBar$.next({ showSideNavToggleIcon: true});
+    this.layout.appToolBar$.next({ showSideNavToggleIcon: true, pageTitle: 'Foodz9'});
   }
 
   navigateToKitchenDetails(id: string) {
