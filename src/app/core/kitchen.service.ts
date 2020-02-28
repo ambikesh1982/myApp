@@ -88,7 +88,7 @@ export class KitchenService {
     const kitchenDocRef = this.afs.doc(`${this.kitchensCollection}/${kid}`).ref;
     const batch = this.afs.firestore.batch();
     batch.delete(itemDocRef);
-    batch.set(kitchenDocRef, { menuItemsCount: this.decrement }, { merge: true });
+    batch.set(kitchenDocRef, { menuItemCount: this.decrement }, { merge: true });
     return batch.commit();
   }
 

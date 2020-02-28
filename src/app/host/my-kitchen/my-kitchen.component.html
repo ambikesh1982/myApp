@@ -30,8 +30,7 @@
 
     <div *ngIf="menuItems$|async as menu" fxLayout="row wrap" fxLayoutAlign="space-around center">
         <mat-card fxFlex.xs=98 fxFlex.sm=50 fxFlex=33 class="app-card" style="margin-top:4px"
-            *ngFor="let menuItem of menu"
-            (click)="editMenuItem(menuItem)">
+            *ngFor="let menuItem of menu">
             <img *ngIf="menuItem.image && menuItem.image.url" class="card-image" mat-card-image [src]="menuItem.image.url"
                 [alt]="menuItem.title">
             <mat-card-header>
@@ -48,6 +47,14 @@
                 <li>Pre-Order: {{menuItem.preOrder}} in advance</li>
                 <li>Avaibility: {{menuItem.availability?menuItem.availability:'All Days'}}</li>
             </mat-card-content>
+            <mat-card-actions align=right>
+                <button mat-icon-button (click)="editMenuItem(menuItem)">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button (click)="removeMenuItem(menuItem.menuId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </mat-card-actions>
 
         </mat-card>
     </div>
