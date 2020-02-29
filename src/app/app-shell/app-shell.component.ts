@@ -41,6 +41,15 @@ export class AppShellComponent implements OnDestroy {
     }
   }
 
+  loginWithGoogle() {
+    this.auth.googleSignin();
+
+  }
+
+  signOut() {
+    this.auth.signOut();
+  }
+
   ngOnDestroy() {
     console.log('Component destroyed!!!');
   }

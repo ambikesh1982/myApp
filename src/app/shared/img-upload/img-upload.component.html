@@ -13,7 +13,10 @@
             [disabled]="selectedFileCount < maxFileUploadCount ? false: true ">
             <mat-icon>file_upload</mat-icon> Upload Image
         </button>
-        <input #chooseFile style="display:none;" type="file" accept="image/.*,capture=camera"
+        <input #chooseFile 
+            style="display:none;" 
+            type="file" 
+            accept="image/*" 
             (change)="startUpload($event.target.files)">
     </div>
     <mat-card-footer *ngIf="uploadPercent$|async as pct">

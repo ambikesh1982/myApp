@@ -4,29 +4,26 @@
 
     <div *ngIf="currAppUser$|async as cu;">
       <mat-toolbar>{{cu.displayName}}</mat-toolbar>
+
       <mat-nav-list>
         <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="/">
           <mat-icon matListIcon>home</mat-icon>
           <span matLine>Home</span>
         </a>
-        <a mat-list-item
-          routerLinkActive="active" 
-          (click)="drawer.close() && handleKitchenRedirect(cu.kitchenId)">
+        <a mat-list-item routerLinkActive="active" (click)="drawer.close() && handleKitchenRedirect(cu.kitchenId)">
           <mat-icon matListIcon>kitchen</mat-icon>
-      <span matLine>{{cu.kitchenId? 'My Kitchen' : 'Setup your kitchen'}}</span>
+          <span matLine>{{cu.kitchenId? 'My Kitchen' : 'Setup your kitchen'}}</span>
+        </a>
+        <a *ngIf="cu.isAnonymous" mat-list-item (click)="drawer.close() && loginWithGoogle()">
+          <mat-icon matListIcon>person_outline</mat-icon>
+          <span matLine>Sign in</span>
+        </a>
+        <a *ngIf="!cu.isAnonymous" mat-list-item (click)="drawer.close() && signOut()">
+          <mat-icon matListIcon>person</mat-icon>
+          <span matLine>Sign out</span>
         </a>
       </mat-nav-list>
     </div>
-
-    <!-- <ng-template #nouser>
-      <mat-toolbar>Guest</mat-toolbar>
-      <mat-nav-list>
-        <a mat-list-item routerLinkActive="active" (click)="drawer.close() && handleKitchenRedirect(null)">
-          <mat-icon matListIcon>kitchen</mat-icon>
-          <span matLine>Setup your kitchen</span>
-        </a>
-      </mat-nav-list>
-    </ng-template> -->
 
   </mat-sidenav>
 
