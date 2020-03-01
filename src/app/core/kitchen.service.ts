@@ -70,6 +70,17 @@ export class KitchenService {
     return batch.commit();
   }
 
+  // Create Kitchen: Called from AddKitchenComponent
+  async deleteKitchen(kitchen: Kitchen): Promise<void> {
+    const batch = this.afs.firestore.batch();
+    const userDocRef = this.afs.collection(this.userCollection).doc(kitchen.ownerId).ref;
+    const kitchenDocRef = this.afs.collection(this.kitchensCollection).doc(kitchen.id).ref;
+
+    batch.delete(kitchenDocRef);
+    batch.set(userDocRef, { kitchenId: null }, { merge: true });
+    return batch.commit();
+  }
+
   createMenuItem(kid: string, menu: IMenuItem) {
     const path = `${this.kitchensCollection}/${kid}/${this.menuSubCollection}`;
     // const itemId = this.newFirebaseDocumentKey;

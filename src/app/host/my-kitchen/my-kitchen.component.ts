@@ -95,10 +95,8 @@ export class MyKitchenComponent implements OnInit {
     this.selectedMenuItem = menu;
   }
 
-
-  navigateToManageKitchen() {
-    console.log('navigateToManageKitchen');
-    this.router.navigate(['kitchen', this.kitchenId, 'manage']);
+  loadKitchenToEdit(kitchen) {
+    this.router.navigate(['host', kitchen.id, 'manage']);
   }
 
   collectMenuOut(menu: any) {
