@@ -4,7 +4,7 @@ import { DialogContactCardComponent } from '../shared/dialog-contact-card/dialog
 
 export interface IContactInfo {
   email: string;
-  phone: string;
+  mobileNo: string;
 }
 
 @Injectable({

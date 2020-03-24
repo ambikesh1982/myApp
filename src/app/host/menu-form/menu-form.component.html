@@ -12,7 +12,14 @@
                 <mat-radio-button value="veg">Veg</mat-radio-button>
                 <mat-radio-button value="nonveg">Non-veg</mat-radio-button>
             </mat-radio-group>
-            <mat-form-field fxFlex="0 1 30">
+        </div>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between stretch">
+            <mat-form-field fxFlex=45>
+                <mat-label>Serving</mat-label>
+                <input matInput type="number" formControlName="serving" required>
+            </mat-form-field>
+            <mat-form-field fxFlex=45>
+                <mat-label>Price</mat-label>
                 <input matInput type="number" formControlName="price" required>
                 <span matPrefix>$&nbsp;</span>
                 <span matSuffix>.00</span>
@@ -46,7 +53,7 @@
         Cancel
     </button>
     <button mat-stroked-button  (click)="onClickSave()" [disabled]="!menuForm.valid">
-        Add
+        Save
     </button>
 </mat-card-actions>
 </mat-card>

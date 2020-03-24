@@ -38,7 +38,7 @@ export class KitchenDetailComponent implements OnInit {
   }
 
   openDialog() {
-    const contactInfo: IContactInfo = { email: this.kitchen.email, phone: this.kitchen.mobileNo };
+    const contactInfo: IContactInfo = this.kitchen.contactInfo;
     this.ds.openContactDialog(contactInfo);
   }
 

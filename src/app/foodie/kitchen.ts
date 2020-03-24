@@ -2,8 +2,7 @@ export interface Kitchen {
   id: string;
   ownerId: string;
   title: string;
-  email: string;
-  mobileNo: string;
+  contactInfo: { email: string, mobileNo: string };
   address: string;
   image: { path: string, url: string };
   description: string;

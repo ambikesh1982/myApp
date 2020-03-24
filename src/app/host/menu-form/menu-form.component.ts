@@ -45,6 +45,7 @@ export class MenuFormComponent implements OnInit, OnChanges, OnDestroy {
       dietType: ['veg', Validators.required],
       availability: ['', Validators.required],
       preOrder: ['', Validators.required],
+      serving: [1, Validators.min(1)],
       // qty: [0, Validators.required],
       image: this.fb.group({
         path: [''],
@@ -71,6 +72,7 @@ export class MenuFormComponent implements OnInit, OnChanges, OnDestroy {
       dietType: menu.dietType,
       availability: menu.availability,
       preOrder: menu.preOrder,
+      serving: menu.serving,
       image: menu.image, // Cannot convert undefined or null to object
     });
   }

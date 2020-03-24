@@ -7,10 +7,10 @@
             <input matInput type="text" placeholder="Enter kitchen name..." formControlName="title">
         </mat-form-field>
 
-        <div fxLayout="row wrap" fxLayoutAlign="space-between">
+        <div fxLayout="row wrap" fxLayoutAlign="space-between" formGroupName="contactInfo">
             <mat-form-field fxFlex=60>
                 <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="Ex. foodz9@gmail.com" formControlName="email">
+                <input matInput type="email" placeholder="Ex. support@foodz9.com" formControlName="email">
                 <mat-error *ngIf="kitchenForm.hasError('email')">
                     Please enter a valid email address
                 </mat-error>
@@ -39,12 +39,14 @@
         <app-img-upload #upload [image]="kitchenForm.get('image').value" [bucket]="kitchenImageBucket"
             (imageUploaded)="addImage($event)">
         </app-img-upload>
-
+        <p>{{kitchenForm.status}}</p>
     </form>
+    
 </mat-card>
 
 <button mat-fab style="position: fixed; bottom:20px; right: 20px; z-index:99"
-    (click)="prepareKitchen()">
+    (click)="prepareKitchen()"
+    [disabled]="!kitchenForm.valid || !this.dataModified">
     <mat-icon>done</mat-icon>
 </button>
 </div>

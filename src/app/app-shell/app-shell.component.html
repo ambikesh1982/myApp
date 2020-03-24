@@ -3,7 +3,9 @@
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" mode=over>
 
     <div *ngIf="currAppUser$|async as cu;">
-      <mat-toolbar>{{cu.displayName}}</mat-toolbar>
+      <mat-toolbar>
+        <mat-toolbar-row>{{cu.displayName}}</mat-toolbar-row>
+      </mat-toolbar>
 
       <mat-nav-list>
         <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="/">
@@ -21,6 +23,10 @@
         <a *ngIf="!cu.isAnonymous" mat-list-item (click)="drawer.close() && signOut()">
           <mat-icon matListIcon>person</mat-icon>
           <span matLine>Sign out</span>
+        </a>
+        <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="user">
+          <mat-icon matListIcon>account_box</mat-icon>
+          <span matLine>My Account</span>
         </a>
       </mat-nav-list>
     </div>
