@@ -49,7 +49,7 @@ export class UserProfileComponent {
   }
 
   navigateToMyKitchen(kitchenId: string) {
-    this.router.navigate(['host', kitchenId,'myKitchen']);
+    this.router.navigate(['host', kitchenId, 'myKitchen']);
   }
 
 }
