@@ -42,7 +42,10 @@ export class UserProfileComponent {
 
   loginWithGoogle(anonymousUser: AppUser) {
     this.auth.googleSignin();
+  }
 
+  logout() {
+    this.auth.signOut();
   }
 
   navigateToMyKitchen(kitchenId: string) {
