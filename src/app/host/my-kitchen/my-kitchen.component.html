@@ -1,8 +1,69 @@
 <div *ngIf="myKitchen$|async as kitchen">
-    <mat-card style="max-width: 400px;">
+    <mat-card style="background-color:whitesmoke;">
+        <mat-card-header style="margin-top:10px">
+            <div mat-card-avatar *ngIf="kitchen.image"
+                [ngStyle]="{'background-image': 'url('+kitchen.image.url+')', 'background-size':'cover'}"></div>
+            <mat-card-title>{{kitchen.title}}</mat-card-title>
+            <mat-card-subtitle>
+                <span>{{kitchen.address}}</span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <br>
+        <mat-divider></mat-divider>
+        <br>
+        <mat-card-content>
+            <div>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <mat-icon matListIcon>email</mat-icon>
+                    <span class="align-with-icon">{{kitchen.contactInfo.email}}</span>
+                </div>
+
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <mat-icon matListIcon>phone</mat-icon>
+                    <span class="align-with-icon">{{kitchen.contactInfo.mobileNo}}</span>
+                </div>
+
+            </div>
+            <br>
+            <mat-divider></mat-divider>
+            <br>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                <div>
+                    <mat-icon>restaurant_menu</mat-icon>
+                    <span class="align-with-icon">Veg/Non-Veg</span>
+                </div>
+    
+                <div *ngIf="kitchen.website">
+                    <mat-icon color="primary">public</mat-icon>
+                    <span class="align-with-icon">Website</span>
+                </div>
+    
+                <div>
+                    <mat-icon [color]="kitchen.likeCount?'accent':null">favorite_border</mat-icon>
+                    <span class="align-with-icon">{{kitchen.likeCount?kitchen.likeCount:null}}</span>
+                </div>
+            </div>
+            <br>
+            <span>{{kitchen.description}}</span>
+            <!-- <mat-divider></mat-divider> -->
+            <div fxLayout="row wrap" fxLayoutAlign="space-around start">
+                <div fxFlex=50>
+                    <p>Delivery Options</p>
+                    <li>Take Away</li>
+                    <li>Dine In</li>
+                    <li>Home delivery</li>
+                </div>
+                <div fxFlex=50>
+                    <p>Payment Options</p>
+                    <li>COD</li>
+                    <li>Interac e-Transfer</li>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <!-- <mat-card style="max-width: 400px;">
         <mat-card-content style="text-align: center">
             <p>{{kitchen.description}}</p>
-            <!-- <p>{{kitchen.address}}</p> -->
 
             <mat-list *ngIf="kitchen.contactInfo">
                 <mat-list-item *ngIf="kitchen.contactInfo.email">
@@ -40,7 +101,7 @@
             (click)="showAddMenuTemplate(true)">Add menu item
         </button>
 
-    </mat-card>
+    </mat-card> -->
 
     <div>
         <app-menu-form *ngIf="showMenuTemplate" [menuIn]="selectedMenuItem" (menuOut)="collectMenuOut($event)"></app-menu-form>
