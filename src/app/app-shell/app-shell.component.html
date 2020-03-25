@@ -20,14 +20,15 @@
           <mat-icon matListIcon>person_outline</mat-icon>
           <span matLine>Sign in</span>
         </a>
-        <a *ngIf="!cu.isAnonymous" mat-list-item (click)="drawer.close() && signOut()">
-          <mat-icon matListIcon>person</mat-icon>
-          <span matLine>Sign out</span>
-        </a>
         <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="user">
           <mat-icon matListIcon>account_box</mat-icon>
           <span matLine>My Account</span>
         </a>
+        <a *ngIf="!cu.isAnonymous" mat-list-item (click)="drawer.close() && signOut()">
+          <mat-icon matListIcon>person</mat-icon>
+          <span matLine>Sign out</span>
+        </a>
+        
       </mat-nav-list>
     </div>
 

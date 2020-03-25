@@ -7,26 +7,10 @@
             <mat-card-subtitle>
                 <span>{{kitchen.address}}</span>
             </mat-card-subtitle>
-        </mat-card-header>
-        <br>
-        <mat-divider></mat-divider>
-        <br>
+        </mat-card-header>  
+
         <mat-card-content>
-            <div>
-                <div fxLayout="row wrap" fxLayoutAlign="space-between">
-                    <mat-icon matListIcon>email</mat-icon>
-                    <span class="align-with-icon">{{kitchen.contactInfo.email}}</span>
-                </div>
-
-                <div fxLayout="row wrap" fxLayoutAlign="space-between">
-                    <mat-icon matListIcon>phone</mat-icon>
-                    <span class="align-with-icon">{{kitchen.contactInfo.mobileNo}}</span>
-                </div>
-
-            </div>
-            <br>
-            <mat-divider></mat-divider>
-            <br>
+            
             <div fxLayout="row wrap" fxLayoutAlign="space-between">
                 <div>
                     <mat-icon>restaurant_menu</mat-icon>
@@ -59,7 +43,25 @@
                     <li>Interac e-Transfer</li>
                 </div>
             </div>
+            <br><mat-divider></mat-divider><br>
+            <div>
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <mat-icon matListIcon>email</mat-icon>
+                    <span class="align-with-icon">{{kitchen.contactInfo.email}}</span>
+                </div>
+            
+                <div fxLayout="row wrap" fxLayoutAlign="space-between">
+                    <mat-icon matListIcon>phone</mat-icon>
+                    <span class="align-with-icon">{{kitchen.contactInfo.mobileNo}}</span>
+                </div>
+            
+            </div>
+
         </mat-card-content>
+        <mat-card-actions fxLayout="row wrap" fxLayoutAlign="space-between">
+            <button fxFlex=45 mat-raised-button (click)="loadKitchenToEdit(kitchen)">Edit Kitchen</button>
+            <button fxFlex=45 mat-raised-button (click)="showAddMenuTemplate(true)">Add menu item</button>
+        </mat-card-actions>
     </mat-card>
     <!-- <mat-card style="max-width: 400px;">
         <mat-card-content style="text-align: center">
@@ -137,11 +139,10 @@
 
         </mat-card>
     </div>
-    <button mat-fab 
+    <!-- <button mat-fab 
         style="position: fixed; bottom:30px; z-index: 99; right:30px" 
-        class="mat-elevation-z4"
-        (click)="loadKitchenToEdit(kitchen)">
+        class="mat-elevation-z4">
         <mat-icon>edit</mat-icon>
-    </button>
+    </button> -->
 
 </div>

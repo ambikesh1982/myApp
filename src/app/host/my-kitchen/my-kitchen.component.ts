@@ -36,7 +36,7 @@ export class MyKitchenComponent implements OnInit {
       this.myKitchen$ = this.ks.getKitchenByID(this.kitchenId).pipe(
         tap(k => {
           if (k) {
-            this.layout.appToolBar$.next({ showSideNavToggleIcon: true, pageTitle: k.title, showGoBackIcon: true });
+            this.layout.appToolBar$.next({ showSideNavToggleIcon: true, pageTitle: 'My Kitchen', showGoBackIcon: true });
             console.log('Kitchen details >>>> ', k);
           } else {
             console.log('Kitchen not found. Redirect to Create-Kitchen page');
