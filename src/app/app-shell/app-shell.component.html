@@ -2,12 +2,18 @@
   <mat-sidenav #drawer class="sidenav" [style.width]="(isHandset$ | async) ? '80%':'400px'" fixedInViewport
     [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" mode=over>
 
-    <div *ngIf="currAppUser$|async as cu;">
+    <div fxLayout="column" fxFill *ngIf="currAppUser$|async as cu;">
       <mat-toolbar>
         <mat-toolbar-row>{{cu.displayName}}</mat-toolbar-row>
       </mat-toolbar>
 
-      <mat-nav-list>
+      <mat-nav-list fxLayout="column" fxFlex>
+
+        <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="user">
+          <mat-icon matListIcon>account_box</mat-icon>
+          <span matLine>My Account</span>
+        </a>
+
         <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="/">
           <mat-icon matListIcon>home</mat-icon>
           <span matLine>Home</span>
@@ -16,13 +22,11 @@
           <mat-icon matListIcon>kitchen</mat-icon>
           <span matLine>{{cu.kitchenId? 'My Kitchen' : 'Setup your kitchen'}}</span>
         </a>
+      <span fxFlex></span>
+      <mat-divider></mat-divider>
         <a *ngIf="cu.isAnonymous" mat-list-item (click)="drawer.close() && loginWithGoogle()">
           <mat-icon matListIcon>person_outline</mat-icon>
           <span matLine>Sign in</span>
-        </a>
-        <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="user">
-          <mat-icon matListIcon>account_box</mat-icon>
-          <span matLine>My Account</span>
         </a>
         <a *ngIf="!cu.isAnonymous" mat-list-item (click)="drawer.close() && signOut()">
           <mat-icon matListIcon>person</mat-icon>
