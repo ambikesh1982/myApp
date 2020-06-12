@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivate: [UnAuthGuard]
   },
   { path: '',
-    redirectTo: 'welcome',
+    redirectTo: 'foodie',
     pathMatch: 'full'
   },
   { path: '**',
