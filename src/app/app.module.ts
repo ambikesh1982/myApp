@@ -24,6 +24,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { SharedModule } from './shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HelpCenterComponent } from './help-center/help-center.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     AppShellComponent,
     WelcomeComponent,
     PageNotFoundComponent,
+    HelpCenterComponent,
   ],
   imports: [
     BrowserModule,

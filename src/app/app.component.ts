@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnDestroy {
-  title = 'foodz9-dev';
+  title = 'foodz9';
   isLoading = false;
   subscription: Subscription;
 

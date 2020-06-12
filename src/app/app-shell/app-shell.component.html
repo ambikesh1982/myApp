@@ -22,6 +22,10 @@
           <mat-icon matListIcon>kitchen</mat-icon>
           <span matLine>{{cu.kitchenId? 'My Kitchen' : 'Setup your kitchen'}}</span>
         </a>
+        <a mat-list-item routerLinkActive="active" (click)="drawer.close()" routerLink="help">
+          <mat-icon matListIcon>contact_support</mat-icon>
+          <span matLine>Help Center</span>
+        </a>
       <span fxFlex></span>
       <mat-divider></mat-divider>
         <a *ngIf="cu.isAnonymous" mat-list-item (click)="drawer.close() && loginWithGoogle()">
