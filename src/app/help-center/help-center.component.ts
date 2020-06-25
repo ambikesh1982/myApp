@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LayoutService } from '../core/layout.service';
 
 @Component({
   selector: 'app-help-center',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HelpCenterComponent implements OnInit {
 
-  constructor() { }
+  constructor(private layout: LayoutService) {
+    this.layout.appToolBar$.next({ showSideNavToggleIcon: true, pageTitle: 'Foodz9' });
+  }
 
   ngOnInit(): void {
   }
