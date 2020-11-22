@@ -1,23 +1,19 @@
 <div fxLayout="row wrap" fxLayoutAlign="space-around center">
    
-    <mat-card>
-        <img mat-card-image src="../../assets/foodie_card_image.png">
-    </mat-card>
-
-    <mat-card>
-        <img mat-card-image src="../../assets/host_card_image.png">
-    </mat-card>
-
-<!-- style="height: 318px;" -->
-    <mat-card>
-        <mat-card-title>Feedback</mat-card-title>
-        <mat-card-content>
-            <p>Your feedback is very important to us.</p>
-            <p>We want to hear what you love and what you think we can do better.</p>
-            <a matLine href="mailto:foodz9.pwa@gmail.com">email: foodz9.pwa@gmail.com</a>
-        </mat-card-content>
-    </mat-card>
-
+   <mat-card>
+    <div fxLayout="row">
+        <mat-icon class="bigIcon" color="primary">search</mat-icon>
+        <h2 class="pullLeft">Hungry?</h2>
+    </div>
+    
+    <mat-card-title>
+           Explore food from home kitchens around you!
+       </mat-card-title>
+   </mat-card>
+<mat-card>
+    <mat-icon class="bigIcon">local_dining</mat-icon>
+    <mat-card-title>Love cooking? How about making some extra income?</mat-card-title>
+</mat-card>
     <button routerLink="/"
         mat-fab 
         style="position: fixed; bottom:30px; z-index: 99; right:30px" 
